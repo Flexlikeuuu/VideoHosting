@@ -13,11 +13,53 @@ from app.core.s3_urls import generate_internal_presigned_url
 from app.models.enums import UserRole, VideoVisibility
 from app.models.user import User
 from app.repositories.video import VideoRepository
+from app.schemas.social import (
+    CommentCreateRequest,
+    CommentResponse,
+    ReactionRequest,
+    ReactionResponse,
+    ReportCreateRequest,
+    ReportResponse,
+)
 from app.schemas.video import GrantAccessRequest, VideoAccessResponse, VideoBaseResponse
 from app.services.access import VideoAccessService
 from app.services.media import MediaService
+from app.services.social import SocialService
 
-router = APIRouter(prefix="/videos", tags=["Videos & Access Control"])
+router = APIRouter(prefix="/videos", tags=["Videos"])
+
+
+@router.get(
+    "",
+    response_model=list[VideoBaseResponse],
+    summary="Главная лента видео (только public + ready + is_hidden=False)",
+    description="Возвращает опубликованные видео с сортировкой (new / popular) и пагинацией.",
+)
+async def list_feed(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    sort: str = "new",
+    limit: int = 20,
+    offset: int = 0,
+) -> list[VideoBaseResponse]:
+    video_repo = VideoRepository(db)
+    videos = await video_repo.list_feed(sort=sort, limit=limit, offset=offset)
+    return [VideoBaseResponse.model_validate(v) for v in videos]
+
+
+@router.get(
+    "/search",
+    response_model=list[VideoBaseResponse],
+    summary="Поиск видео по названию и описанию",
+)
+async def search_videos(
+    q: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    limit: int = 20,
+    offset: int = 0,
+) -> list[VideoBaseResponse]:
+    video_repo = VideoRepository(db)
+    videos = await video_repo.search(query=q, limit=limit, offset=offset)
+    return [VideoBaseResponse.model_validate(v) for v in videos]
 
 
 @router.post(
@@ -147,6 +189,82 @@ async def get_video_thumbnail(
         "Content-Type": "image/jpeg",
     }
     return Response(content=b"", status_code=status.HTTP_200_OK, headers=headers)
+
+
+@router.post(
+    "/{video_id}/view",
+    summary="Учет просмотра видео (с дедупликацией через Redis)",
+)
+async def record_view(
+    video_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User | None, Depends(get_optional_user)],
+) -> dict:
+    identifier = str(current_user.id) if current_user else "anon"
+    service = SocialService(db)
+    views = await service.record_view(video_id, identifier)
+    return {"views_count": views}
+
+
+@router.post(
+    "/{video_id}/react",
+    response_model=ReactionResponse,
+    summary="Поставить лайк / дизлайк или снять реакцию",
+    description="value: 1 = like, -1 = dislike, 0 = снять реакцию. Счетчики обновляются атомарно.",
+)
+async def react_to_video(
+    video_id: uuid.UUID,
+    req: ReactionRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> ReactionResponse:
+    service = SocialService(db)
+    return await service.set_reaction(video_id, current_user, req.value)
+
+
+@router.get(
+    "/{video_id}/comments",
+    response_model=list[CommentResponse],
+    summary="Список комментариев к видео",
+)
+async def get_comments(
+    video_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> list[CommentResponse]:
+    service = SocialService(db)
+    return await service.list_comments(video_id)
+
+
+@router.post(
+    "/{video_id}/comments",
+    response_model=CommentResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Добавить комментарий к видео",
+)
+async def add_comment(
+    video_id: uuid.UUID,
+    req: CommentCreateRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> CommentResponse:
+    service = SocialService(db)
+    return await service.add_comment(video_id, current_user, req.content)
+
+
+@router.post(
+    "/{video_id}/report",
+    response_model=ReportResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Отправить жалобу на видео",
+)
+async def report_video(
+    video_id: uuid.UUID,
+    req: ReportCreateRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> ReportResponse:
+    service = SocialService(db)
+    return await service.create_report(video_id, current_user, req.reason)
 
 
 @router.get(

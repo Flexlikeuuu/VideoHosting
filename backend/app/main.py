@@ -4,7 +4,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.routers import auth as auth_router
+from app.api.v1.routers import channels as channels_router
+from app.api.v1.routers import comments as comments_router
 from app.api.v1.routers import health as health_router
+from app.api.v1.routers import moderation as moderation_router
+from app.api.v1.routers import playlists as playlists_router
 from app.api.v1.routers import videos as videos_router
 from app.core.config import settings
 from app.core.database import engine
@@ -44,3 +48,7 @@ app.add_middleware(
 app.include_router(health_router.router, prefix="/api/v1")
 app.include_router(auth_router.router, prefix="/api/v1")
 app.include_router(videos_router.router, prefix="/api/v1")
+app.include_router(comments_router.router, prefix="/api/v1")
+app.include_router(channels_router.router, prefix="/api/v1")
+app.include_router(playlists_router.router, prefix="/api/v1")
+app.include_router(moderation_router.router, prefix="/api/v1")
