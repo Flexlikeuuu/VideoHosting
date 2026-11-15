@@ -1,24 +1,19 @@
-from redis.asyncio import Redis
+import asyncio
+from redis.asyncio import ConnectionPool, Redis
 
 from app.core.config import settings
 
-_redis_client: Redis | None = None
+_pool: ConnectionPool | None = None
 
 
 def get_redis_client() -> Redis:
-    """Return a shared async Redis client instance."""
-    global _redis_client
-    if _redis_client is None:
-        _redis_client = Redis.from_url(settings.REDIS_URL, decode_responses=True)
-    return _redis_client
+    """Return an async Redis client instance bound to current event loop."""
+    return Redis.from_url(settings.REDIS_URL, decode_responses=True)
 
 
 async def close_redis_client() -> None:
-    """Close the shared Redis client on application shutdown."""
-    global _redis_client
-    if _redis_client is not None:
-        await _redis_client.aclose()
-        _redis_client = None
+    """Placeholder for graceful shutdown."""
+    pass
 
 
 async def check_redis_connection() -> tuple[bool, str | None]:

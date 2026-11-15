@@ -3,7 +3,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1.routers import auth as auth_router
 from app.api.v1.routers import health as health_router
+from app.api.v1.routers import videos as videos_router
 from app.core.config import settings
 from app.core.database import engine
 from app.core.redis import close_redis_client, get_redis_client
@@ -40,3 +42,5 @@ app.add_middleware(
 )
 
 app.include_router(health_router.router, prefix="/api/v1")
+app.include_router(auth_router.router, prefix="/api/v1")
+app.include_router(videos_router.router, prefix="/api/v1")
