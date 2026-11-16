@@ -1,4 +1,4 @@
-.PHONY: up down build ps logs health migrate test
+.PHONY: up down build ps logs health migrate seed test
 
 up:
 	./deploy.sh
@@ -21,5 +21,8 @@ health:
 migrate:
 	docker compose exec backend alembic upgrade head
 
+seed:
+	docker compose exec -T backend python scripts/seed.py
+
 test:
-	docker compose exec backend pytest -v
+	docker compose exec -T -e PYTHONPATH=/app backend pytest -v

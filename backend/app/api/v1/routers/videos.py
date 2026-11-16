@@ -156,6 +156,7 @@ async def stream_video(
     headers = {
         "X-Accel-Redirect": f"/_internal_s3{s3_subpath}",
         "Content-Type": "video/mp4",
+        "Accept-Ranges": "bytes",
     }
     return Response(content=b"", status_code=status.HTTP_200_OK, headers=headers)
 

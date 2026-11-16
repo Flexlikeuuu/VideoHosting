@@ -89,6 +89,8 @@ services:
       - .env
     environment:
       RUN_MIGRATIONS: "true"
+    volumes:
+      - ./backend:/app
     depends_on:
       postgres:
         condition: service_healthy
@@ -115,6 +117,8 @@ services:
     environment:
       RUN_MIGRATIONS: "false"
     command: ["arq", "app.worker.WorkerSettings"]
+    volumes:
+      - ./backend:/app
     depends_on:
       postgres:
         condition: service_healthy

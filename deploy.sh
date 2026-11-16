@@ -14,6 +14,8 @@ for i in $(seq 1 30); do
   if docker compose ps --format json | grep -q '"Health":"healthy"'; then
     if curl -fsS "http://localhost:${APP_PORT:-80}/api/v1/health" >/dev/null 2>&1; then
       echo "[deploy] System is healthy!"
+      echo "[deploy] Seeding database and media storage..."
+      docker compose exec -T backend python scripts/seed.py
       echo "  - App:     http://localhost:${APP_PORT:-80}"
       echo "  - Swagger: http://localhost:${APP_PORT:-80}/docs"
       echo "  - Health:  http://localhost:${APP_PORT:-80}/api/v1/health"
