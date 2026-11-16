@@ -1,0 +1,35 @@
+Command exited with code 0.
+
+Command output:
+ Container youtubetask-nginx-1 Stopping 
+ Container youtubetask-nginx-1 Stopped 
+Going to remove youtubetask-nginx-1
+ Container youtubetask-nginx-1 Removing 
+ Container youtubetask-nginx-1 Removed 
+ Container youtubetask-postgres-1 Running 
+ Container youtubetask-redis-1 Running 
+ Container youtubetask-minio-1 Running 
+ Container youtubetask-backend-1 Running 
+ Container youtubetask-nginx-1 Creating 
+ Container youtubetask-nginx-1 Created 
+ Container youtubetask-minio-1 Waiting 
+ Container youtubetask-minio-1 Healthy 
+ Container youtubetask-minio-init-1 Starting 
+ Container youtubetask-minio-init-1 Started 
+ Container youtubetask-redis-1 Waiting 
+ Container youtubetask-minio-init-1 Waiting 
+ Container youtubetask-postgres-1 Waiting 
+ Container youtubetask-postgres-1 Healthy 
+ Container youtubetask-redis-1 Healthy 
+ Container youtubetask-minio-init-1 Exited 
+ Container youtubetask-backend-1 Waiting 
+ Container youtubetask-backend-1 Healthy 
+ Container youtubetask-nginx-1 Starting 
+ Container youtubetask-nginx-1 Started 
+NAME                     IMAGE                 COMMAND                  SERVICE    CREATED         STATUS                                     PORTS
+youtubetask-backend-1    youtubetask-backend   "/app/entrypoint.sh …"   backend    2 minutes ago   Up 2 minutes (healthy)                     8000/tcp
+youtubetask-minio-1      pgsty/silo:latest     "/usr/bin/docker-ent…"   minio      3 days ago      Up 11 minutes (healthy)                    9000/tcp
+youtubetask-nginx-1      nginx:1.27-alpine     "/docker-entrypoint.…"   nginx      5 seconds ago   Up Less than a second (health: starting)   0.0.0.0:80->80/tcp, [::]:80->80/tcp
+youtubetask-postgres-1   postgres:16-alpine    "docker-entrypoint.s…"   postgres   3 days ago      Up 11 minutes (healthy)                    5432/tcp
+youtubetask-redis-1      redis:7-alpine        "docker-entrypoint.s…"   redis      3 days ago      Up 11 minutes (healthy)                    6379/tcp
+youtubetask-worker-1     youtubetask-worker    "/app/entrypoint.sh …"   worker     2 minutes ago   Up 2 minutes (healthy)                     8000/tcp

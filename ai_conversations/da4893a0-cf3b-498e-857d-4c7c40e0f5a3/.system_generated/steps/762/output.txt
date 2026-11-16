@@ -1,0 +1,3 @@
+Created At: 2026-11-16T10:51:15+03:00
+Completed At: 2026-11-16T10:51:15+03:00
+Made 1 replacement in c:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\backend\pytest.ini starting at line 1 (+1/-0 lines).

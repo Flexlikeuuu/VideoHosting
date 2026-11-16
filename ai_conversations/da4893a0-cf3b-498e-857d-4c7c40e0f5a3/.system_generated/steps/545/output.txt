@@ -1,0 +1,17 @@
+Created At: 2026-11-15T20:58:05+03:00
+Completed At: 2026-11-15T20:58:07+03:00
+Command exited with code 0.
+
+Command output:
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\backend\tests
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+-a----        11/15/2026   8:33 PM           7659 test_auth_and_access.py                                              
+-a----        11/15/2026   8:30 PM           3422 test_media_pipeline.py                                               
+-a----        11/15/2026   8:36 PM           7254 test_social_and_moderation.py                                        
+
+

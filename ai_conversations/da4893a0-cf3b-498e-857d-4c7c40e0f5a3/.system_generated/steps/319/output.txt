@@ -1,0 +1,35 @@
+Created At: 2026-11-15T20:33:13+03:00
+Completed At: 2026-11-15T20:33:14+03:00
+Command exited with code 0.
+
+Command output:
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/videos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/worker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/queue.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/s3_urls.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/validators.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/media.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_media_pipeline.py', LF will be replaced by CRLF the next time Git touches it
+[master ef97717] feat: implement streaming video upload, ffmpeg worker, and range streaming
+ 8 files changed, 652 insertions(+), 7 deletions(-)
+ create mode 100644 backend/app/core/queue.py
+ create mode 100644 backend/app/core/s3_urls.py
+ create mode 100644 backend/app/core/validators.py
+ create mode 100644 backend/app/services/media.py
+ create mode 100644 backend/tests/test_media_pipeline.py
+commit ef9771749638ccd4f0ceb1e045f5c42dd9c0c790
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Sun Nov 15 20:33:13 2026 +0300
+
+    feat: implement streaming video upload, ffmpeg worker, and range streaming
+
+ .gitignore                           |   2 +
+ backend/app/api/v1/routers/videos.py | 139 ++++++++++++++++++++++++-
+ backend/app/core/queue.py            |  18 ++++
+ backend/app/core/s3_urls.py          |  18 ++++
+ backend/app/core/validators.py       |  43 ++++++++
+ backend/app/services/media.py        | 154 +++++++++++++++++++++++++++
+ backend/app/worker.py                | 196 ++++++++++++++++++++++++++++++++++-
+ backend/tests/test_media_pipeline.py |  89 ++++++++++++++++
+ 8 files changed, 652 insertions(+), 7 deletions(-)

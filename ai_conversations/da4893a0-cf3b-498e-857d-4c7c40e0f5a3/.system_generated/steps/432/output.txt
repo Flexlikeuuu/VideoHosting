@@ -1,0 +1,24 @@
+Created At: 2026-11-15T20:48:44+03:00
+Completed At: 2026-11-15T20:48:45+03:00
+Command exited with code 0.
+
+Command output:
+
+FullName                                                                                       
+--------                                                                                       
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\components              
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\context                 
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\pages                   
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\api.ts                  
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\index.css               
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\types.ts                
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\utils.ts                
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\components\Header.tsx   
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\components\Sidebar.tsx  
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\components\VideoCard.tsx
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\context\AuthContext.tsx 
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\context\ThemeContext.tsx
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\pages\HomePage.tsx      
+C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\pages\WatchPage.tsx     
+
+

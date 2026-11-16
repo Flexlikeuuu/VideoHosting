@@ -1,0 +1,574 @@
+Created At: 2026-11-15T20:23:14+03:00
+Completed At: 2026-11-15T20:23:24+03:00
+Command exited with code 1.
+
+Command output:
+ youtubetask-backend-1 Copying backend/tests/test_auth_and_access.py to youtubetask-backend-1:/app/tests/test_auth_and_access.py
+ youtubetask-backend-1 Copied backend/tests/test_auth_and_access.py to youtubetask-backend-1:/app/tests/test_auth_and_access.py
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/local/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /app
+plugins: asyncio-0.26.0, anyio-4.16.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 3 items
+
+tests/test_auth_and_access.py::test_auth_registration_and_login_flow PASSED [ 33%]
+tests/test_auth_and_access.py::test_rbac_protection FAILED               [ 66%]
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow FAILED [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_rbac_protection _____________________________
+
+client = <httpx.AsyncClient object at 0x7d9289517f50>
+
+    @pytest.mark.asyncio
+    async def test_rbac_protection(client: AsyncClient):
+        suffix = uuid.uuid4().hex[:6]
+    
+        async with async_session_factory() as session:
+            norm_user = User(
+                email=f"norm_{suffix}@example.com",
+                username=f"norm_{suffix}",
+                password_hash=hash_password("password"),
+                role=UserRole.USER,
+                channel_name="Norm",
+            )
+            mod_user = User(
+                email=f"mod_{suffix}@example.com",
+                username=f"mod_{suffix}",
+                password_hash=hash_password("password"),
+                role=UserRole.MODERATOR,
+                channel_name="Mod",
+            )
+            session.add_all([norm_user, mod_user])
+>           await session.commit()
+
+tests/test_auth_and_access.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/session.py:1309: in commit
+    await greenlet_spawn(self.sync_session.commit)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/concurrency.py:210: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2177: in commit
+    trans.commit(_to_root=True)
+<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.commit>:2: in commit
+    return target(fn, self, _to_root=_to_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1412: in commit
+    self._prepare_impl()
+<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._prepare_impl>:2: in _prepare_impl
+    return target(fn, self)
+           ^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1386: in _prepare_impl
+    self.session.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4626: in flush
+    self._flush(objects)
+<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>:2: in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/deprecations.py:281: in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4769: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:166: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4730: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:467: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:643: in execute
+    util.preloaded.orm_persistence._save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:67: in _save_obj
+    ) in _organize_states_for_save(base_mapper, states, uowtransaction):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:222: in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1786: in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.connection>:2: in connection
+    return target(fn, self, bindkey, execution_options=execution_options, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1054: in connection
+    return self._connection_for_bind(bind, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>:2: in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1268: in _connection_for_bind
+    conn = self._parent._connection_for_bind(
+<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>:2: in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1282: in _connection_for_bind
+    conn = bind.connect()
+           ^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3279: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:154: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3303: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py:445: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py:1439: in _checkout
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:166: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py:1377: in _checkout
+    result = pool._dialect._do_ping_w_event(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:968: in _do_ping_w_event
+    return self.do_ping(dbapi_connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:1208: in do_ping
+    dbapi_connection.ping()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:864: in ping
+    self._handle_exception(error)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:847: in _handle_exception
+    super()._handle_exception(error)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/connectors/asyncio.py:412: in _handle_exception
+    self._handle_exception_no_connection(self.dbapi, error)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:841: in _handle_exception_no_connection
+    super()._handle_exception_no_connection(dbapi, error)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/connectors/asyncio.py:409: in _handle_exception_no_connection
+    raise error.with_traceback(exc_info[2])
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:862: in ping
+    _ = await_(self._async_ping())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/concurrency.py:167: in await_
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/concurrency.py:205: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py:871: in _async_ping
+    await tr.start()
+/usr/local/lib/python3.12/site-packages/asyncpg/transaction.py:146: in start
+    await self._connection.execute(query)
+/usr/local/lib/python3.12/site-packages/asyncpg/connection.py:377: in execute
+    result = await self._protocol.query(query, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   RuntimeError: Task <Task pending name='Task-11' coro=<test_rbac_protection() running at /app/tests/test_auth_and_access.py:98> cb=[_run_until_complete_cb() at /usr/local/lib/python3.12/asyncio/base_events.py:181]> got Future <Future pending cb=[BaseProtocol._on_waiter_completed()]> attached to a different loop
+
+asyncpg/protocol/protocol.pyx:341: RuntimeError
+------------------------------ Captured log call -------------------------------
+ERROR    sqlalchemy.pool.impl.AsyncAdaptedQueuePool:base.py:374 Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x7d9289128e50>>
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 585, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/protocol.pyx", line 677, in _drain_cancels
+  File "asyncpg/protocol/protocol.pyx", line 624, in asyncpg.protocol.protocol.BaseProtocol._request_cancel
+  File "/usr/local/lib/python3.12/site-packages/asyncpg/connection.py", line 1712, in _cancel_current_command
+    self._cancellations.add(self._loop.create_task(
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 455, in create_task
+    self._check_closed()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/asyncpg/connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 610, in close
+  File "asyncpg/protocol/protocol.pyx", line 697, in asyncpg.protocol.protocol.BaseProtocol._handle_waiter_on_connection_lost
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 370, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 1175, in do_terminate
+    dbapi_connection.terminate()
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/connectors/asyncio.py", line 440, in terminate
+    await_(asyncio.shield(self._terminate_graceful_close()))
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/concurrency.py", line 167, in await_
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/concurrency.py", line 205, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 940, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "/usr/local/lib/python3.12/site-packages/asyncpg/connection.py", line 1539, in close
+    self._abort()
+  File "/usr/local/lib/python3.12/site-packages/asyncpg/connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "/usr/local/lib/python3.12/asyncio/selector_events.py", line 836, in abort
+    self._force_close(None)
+  File "/usr/local/lib/python3.12/asyncio/selector_events.py", line 906, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+_______________ test_private_video_access_control_and_grant_flow _______________
+
+self = <redis.asyncio.connection.Connection(host=redis,port=6379,db=0)>
+disable_decoding = False, timeout = None
+
+    async def read_response(
+        self,
+        disable_decoding: bool = False,
+        timeout: Optional[float] = None,
+        *,
+        disconnect_on_error: bool = True,
+        push_request: Optional[bool] = False,
+    ):
+        """Read the response from a previously sent command"""
+        read_timeout = timeout if timeout is not None else self.socket_timeout
+        host_error = self._host_error()
+        try:
+            if (
+                read_timeout is not None
+                and self.protocol in ["3", 3]
+                and not HIREDIS_AVAILABLE
+            ):
+                async with async_timeout(read_timeout):
+                    response = await self._parser.read_response(
+                        disable_decoding=disable_decoding, push_request=push_request
+                    )
+            elif read_timeout is not None:
+                async with async_timeout(read_timeout):
+                    response = await self._parser.read_response(
+                        disable_decoding=disable_decoding
+                    )
+            elif self.protocol in ["3", 3] and not HIREDIS_AVAILABLE:
+                response = await self._parser.read_response(
+                    disable_decoding=disable_decoding, push_request=push_request
+                )
+            else:
+>               response = await self._parser.read_response(
+                    disable_decoding=disable_decoding
+                )
+
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:562: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/redis/_parsers/hiredis.py:211: in read_response
+    await self.read_from_socket()
+/usr/local/lib/python3.12/site-packages/redis/_parsers/hiredis.py:189: in read_from_socket
+    buffer = await self._stream.read(self._read_size)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/streams.py:713: in read
+    await self._wait_for_data('read')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <StreamReader transport=<_SelectorSocketTransport closing fd=11>>
+func_name = 'read'
+
+    async def _wait_for_data(self, func_name):
+        """Wait until feed_data() or feed_eof() is called.
+    
+        If stream was paused, automatically resume it.
+        """
+        # StreamReader uses a future to link the protocol feed_data() method
+        # to a read coroutine. Running two read coroutines at the same time
+        # would have an unexpected behaviour. It would not possible to know
+        # which coroutine would get the next data.
+        if self._waiter is not None:
+            raise RuntimeError(
+                f'{func_name}() called while another coroutine is '
+                f'already waiting for incoming data')
+    
+        assert not self._eof, '_wait_for_data after EOF'
+    
+        # Waiting for data while paused will make deadlock, so prevent it.
+        # This is essential for readexactly(n) for case when n > self._limit.
+        if self._paused:
+            self._paused = False
+            self._transport.resume_reading()
+    
+        self._waiter = self._loop.create_future()
+        try:
+>           await self._waiter
+E           RuntimeError: Task <Task pending name='Task-17' coro=<test_private_video_access_control_and_grant_flow() running at /app/tests/test_auth_and_access.py:179> cb=[_run_until_complete_cb() at /usr/local/lib/python3.12/asyncio/base_events.py:181]> got Future <Future pending> attached to a different loop
+
+/usr/local/lib/python3.12/asyncio/streams.py:545: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+client = <httpx.AsyncClient object at 0x7d92887dfc50>
+
+    @pytest.mark.asyncio
+    async def test_private_video_access_control_and_grant_flow(client: AsyncClient):
+        suffix = uuid.uuid4().hex[:6]
+    
+        # Users: Owner, Friend, Stranger
+        owner = User(
+            email=f"owner_{suffix}@example.com",
+            username=f"owner_{suffix}",
+            password_hash=hash_password("password"),
+            role=UserRole.USER,
+            channel_name="Owner Channel",
+        )
+        friend = User(
+            email=f"friend_{suffix}@example.com",
+            username=f"friend_{suffix}",
+            password_hash=hash_password("password"),
+            role=UserRole.USER,
+            channel_name="Friend Channel",
+        )
+        stranger = User(
+            email=f"stranger_{suffix}@example.com",
+            username=f"stranger_{suffix}",
+            password_hash=hash_password("password"),
+            role=UserRole.USER,
+            channel_name="Stranger Channel",
+        )
+    
+        async with async_session_factory() as session:
+            session.add_all([owner, friend, stranger])
+            await session.commit()
+            await session.refresh(owner)
+            await session.refresh(friend)
+            await session.refresh(stranger)
+    
+            private_video = Video(
+                owner_id=owner.id,
+                title="Secret Video",
+                description="Very secret",
+                status=VideoStatus.READY,
+                visibility=VideoVisibility.PRIVATE,
+                is_hidden=False,
+            )
+            session.add(private_video)
+            await session.commit()
+            await session.refresh(private_video)
+            video_id = private_video.id
+    
+        # 1. Anonymous request to private video returns 403 Forbidden
+        anon_resp = await client.get(f"/api/v1/videos/{video_id}")
+        assert anon_resp.status_code == 403
+    
+        # 2. Stranger request returns 403 Forbidden
+>       stranger_login = await client.post(
+            "/api/v1/auth/login",
+            json={"username_or_email": stranger.username, "password": "password"},
+        )
+
+tests/test_auth_and_access.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1859: in post
+    return await self.request(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_transports/asgi.py:170: in handle_async_request
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+/usr/local/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/api/v1/routers/auth.py:90: in login
+    allowed, _ = await auth_rate_limiter.is_allowed(
+app/core/rate_limit.py:18: in is_allowed
+    current = await redis.incr(key)
+              ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:646: in execute_command
+    return await conn.retry.call_with_retry(
+/usr/local/lib/python3.12/site-packages/redis/asyncio/retry.py:59: in call_with_retry
+    return await do()
+           ^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:620: in _send_command_parse_response
+    return await self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:667: in parse_response
+    response = await connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:582: in read_response
+    await self.disconnect(nowait=True)
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:438: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+    ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/streams.py:358: in close
+    return self._transport.close()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/selector_events.py:1213: in close
+    super().close()
+/usr/local/lib/python3.12/asyncio/selector_events.py:875: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+/usr/local/lib/python3.12/asyncio/base_events.py:799: in call_soon
+    self._check_closed()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_UnixSelectorEventLoop running=False closed=True debug=False>
+
+    def _check_closed(self):
+        if self._closed:
+>           raise RuntimeError('Event loop is closed')
+E           RuntimeError: Event loop is closed
+
+/usr/local/lib/python3.12/asyncio/base_events.py:545: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 17:23:22,571 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-15 17:23:22,573 INFO sqlalchemy.engine.Engine INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN), ($10::UU ... 195 characters truncated ... AR, $25::VARCHAR, $26::VARCHAR, $27::BOOLEAN) RETURNING users.created_at, users.updated_at, users.id
+2026-11-15 17:23:22,573 INFO sqlalchemy.engine.Engine [generated in 0.00022s (insertmanyvalues) 1/1 (ordered)] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'), 'owner_c38670@example.com', 'owner_c38670', '$argon2id$v=19$m=65536,t=3,p=4$WWmsapkt0TtycqwFGCNXhQ$RhxAyOz4DgK7c92agBxo+hbPo4WSzjpOdXFLV5/CbuI', <UserRole.USER: 'user'>, 'Owner Channel', None, None, True, UUID('07d511d5-0ae7-479a-b9a5-b156e12e7110'), 'friend_c38670@example.com', 'friend_c38670', '$argon2id$v=19$m=65536,t=3,p=4$N6CfRed/RFSceS9mXwp03w$XPLBfn7RvygJyuBgsaFFRFCaBjaARQh94camBzG1J6k', <UserRole.USER: 'user'>, 'Friend Channel', None, None, True, UUID('a1da2f0a-7c9f-42da-811c-f0ffce04faba'), 'stranger_c38670@example.com', 'stranger_c38670', '$argon2id$v=19$m=65536,t=3,p=4$A0JKMMDE2IZs6CtiYy+X/Q$a2KcHpNX4W0eW7p2zXGjoUPq0ZHYx/XVm05uEtEyAVw', <UserRole.USER: 'user'>, 'Stranger Channel', None, None, True)
+2026-11-15 17:23:22,579 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-15 17:23:22,584 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-15 17:23:22,584 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-15 17:23:22,584 INFO sqlalchemy.engine.Engine [cached since 1.554s ago] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'),)
+2026-11-15 17:23:22,588 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-15 17:23:22,588 INFO sqlalchemy.engine.Engine [cached since 1.558s ago] (UUID('07d511d5-0ae7-479a-b9a5-b156e12e7110'),)
+2026-11-15 17:23:22,590 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-15 17:23:22,590 INFO sqlalchemy.engine.Engine [cached since 1.559s ago] (UUID('a1da2f0a-7c9f-42da-811c-f0ffce04faba'),)
+2026-11-15 17:23:22,594 INFO sqlalchemy.engine.Engine INSERT INTO videos (id, owner_id, title, description, status, visibility, is_hidden, hidden_reason, duration_seconds, views_count, likes_count, dislikes_count, raw_object_key, processed_object_key, thumbnail_object_key, error_message) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::BOOLEAN, $8::VARCHAR, $9::INTEGER, $10::BIGINT, $11::INTEGER, $12::INTEGER, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR) RETURNING videos.created_at, videos.updated_at
+2026-11-15 17:23:22,594 INFO sqlalchemy.engine.Engine [generated in 0.00042s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'), UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'), 'Secret Video', 'Very secret', <VideoStatus.READY: 'ready'>, <VideoVisibility.PRIVATE: 'private'>, False, None, None, 0, 0, 0, None, None, None, None)
+2026-11-15 17:23:22,600 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-15 17:23:22,603 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-15 17:23:22,605 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-15 17:23:22,606 INFO sqlalchemy.engine.Engine [generated in 0.00033s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'),)
+2026-11-15 17:23:22,609 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-11-15 17:23:22,624 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-15 17:23:22,627 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-15 17:23:22,628 INFO sqlalchemy.engine.Engine [generated in 0.00030s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'),)
+2026-11-15 17:23:22,630 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-11-15 17:23:22,630 INFO sqlalchemy.engine.Engine [generated in 0.00040s] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'),)
+2026-11-15 17:23:22,633 INFO sqlalchemy.engine.Engine ROLLBACK
+------------------------------ Captured log call -------------------------------
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1866 INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN), ($10::UU ... 195 characters truncated ... AR, $25::VARCHAR, $26::VARCHAR, $27::BOOLEAN) RETURNING users.created_at, users.updated_at, users.id
+INFO     sqlalchemy.engine.Engine:base.py:2102 [generated in 0.00022s (insertmanyvalues) 1/1 (ordered)] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'), 'owner_c38670@example.com', 'owner_c38670', '$argon2id$v=19$m=65536,t=3,p=4$WWmsapkt0TtycqwFGCNXhQ$RhxAyOz4DgK7c92agBxo+hbPo4WSzjpOdXFLV5/CbuI', <UserRole.USER: 'user'>, 'Owner Channel', None, None, True, UUID('07d511d5-0ae7-479a-b9a5-b156e12e7110'), 'friend_c38670@example.com', 'friend_c38670', '$argon2id$v=19$m=65536,t=3,p=4$N6CfRed/RFSceS9mXwp03w$XPLBfn7RvygJyuBgsaFFRFCaBjaARQh94camBzG1J6k', <UserRole.USER: 'user'>, 'Friend Channel', None, None, True, UUID('a1da2f0a-7c9f-42da-811c-f0ffce04faba'), 'stranger_c38670@example.com', 'stranger_c38670', '$argon2id$v=19$m=65536,t=3,p=4$A0JKMMDE2IZs6CtiYy+X/Q$a2KcHpNX4W0eW7p2zXGjoUPq0ZHYx/XVm05uEtEyAVw', <UserRole.USER: 'user'>, 'Stranger Channel', None, None, True)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.554s ago] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.558s ago] (UUID('07d511d5-0ae7-479a-b9a5-b156e12e7110'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.559s ago] (UUID('a1da2f0a-7c9f-42da-811c-f0ffce04faba'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 INSERT INTO videos (id, owner_id, title, description, status, visibility, is_hidden, hidden_reason, duration_seconds, views_count, likes_count, dislikes_count, raw_object_key, processed_object_key, thumbnail_object_key, error_message) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::BOOLEAN, $8::VARCHAR, $9::INTEGER, $10::BIGINT, $11::INTEGER, $12::INTEGER, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR) RETURNING videos.created_at, videos.updated_at
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00042s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'), UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'), 'Secret Video', 'Very secret', <VideoStatus.READY: 'ready'>, <VideoVisibility.PRIVATE: 'private'>, False, None, None, 0, 0, 0, None, None, None, None)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00033s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00030s] (UUID('9aaf5781-dc49-4400-b95f-d9d6cecc2858'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00040s] (UUID('8a989a62-22bd-42f8-9ca7-6c9376e49639'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+=============================== warnings summary ===============================
+tests/test_auth_and_access.py::test_auth_registration_and_login_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1768: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_auth_and_access.py::test_rbac_protection - RuntimeError: Ta...
+FAILED tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+==================== 2 failed, 1 passed, 1 warning in 4.41s ====================

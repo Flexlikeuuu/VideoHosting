@@ -1,0 +1,17 @@
+Created At: 2026-11-12T18:16:49+03:00
+Completed At: 2026-11-12T18:16:56+03:00
+Command exited with code 1.
+
+Command output:
+ Image redis:7-alpine Pulling 
+ Image minio/mc:latest Pulling 
+ Image nginx:1.27-alpine Pulling 
+ Image minio/minio:latest Pulling 
+ Image minio/minio:latest Error pull access denied for minio/minio, repository does not exist or may require 'docker login'
+ Image redis:7-alpine Interrupted 
+ Image minio/mc:latest Interrupted 
+ Image nginx:1.27-alpine Interrupted 
+Error response from daemon: pull access denied for minio/minio, repository does not exist or may require 'docker login'
+Error response from daemon: No such image: minio/mc:latest
+Error response from daemon: No such image: nginx:1.27-alpine
+Error response from daemon: No such image: redis:7-alpine

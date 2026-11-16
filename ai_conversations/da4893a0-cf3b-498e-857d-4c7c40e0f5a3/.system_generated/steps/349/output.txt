@@ -1,0 +1,9 @@
+Created At: 2026-11-15T20:36:06+03:00
+Completed At: 2026-11-15T20:36:11+03:00
+Command exited with code 0.
+
+Command output:
+ youtubetask-backend-1 Copying backend/app/. to youtubetask-backend-1:/app/app/
+ youtubetask-backend-1 Copied backend/app/. to youtubetask-backend-1:/app/app/
+ Container youtubetask-backend-1 Restarting 
+ Container youtubetask-backend-1 Started 

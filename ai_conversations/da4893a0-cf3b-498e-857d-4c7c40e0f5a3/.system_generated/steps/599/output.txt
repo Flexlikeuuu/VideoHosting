@@ -1,0 +1,35 @@
+Created At: 2026-11-15T21:03:41+03:00
+Completed At: 2026-11-15T21:03:43+03:00
+Command exited with code 0.
+
+Command output:
+[master ae20014] feat: implement react frontend with youtube ui and dark mode
+ 29 files changed, 5471 insertions(+), 2 deletions(-)
+ create mode 100644 .dockerignore
+ create mode 100644 frontend/index.html
+ create mode 100644 frontend/package-lock.json
+ create mode 100644 frontend/package.json
+ create mode 100644 frontend/postcss.config.js
+ create mode 100644 frontend/src/App.tsx
+ create mode 100644 frontend/src/api.ts
+ create mode 100644 frontend/src/components/Header.tsx
+ create mode 100644 frontend/src/components/Sidebar.tsx
+ create mode 100644 frontend/src/components/VideoCard.tsx
+ create mode 100644 frontend/src/context/AuthContext.tsx
+ create mode 100644 frontend/src/context/ThemeContext.tsx
+ create mode 100644 frontend/src/index.css
+ create mode 100644 frontend/src/main.tsx
+ create mode 100644 frontend/src/pages/ChannelPage.tsx
+ create mode 100644 frontend/src/pages/HomePage.tsx
+ create mode 100644 frontend/src/pages/LoginPage.tsx
+ create mode 100644 frontend/src/pages/ModerationPage.tsx
+ create mode 100644 frontend/src/pages/RegisterPage.tsx
+ create mode 100644 frontend/src/pages/SearchPage.tsx
+ create mode 100644 frontend/src/pages/UploadPage.tsx
+ create mode 100644 frontend/src/pages/WatchPage.tsx
+ create mode 100644 frontend/src/types.ts
+ create mode 100644 frontend/src/utils.ts
+ create mode 100644 frontend/tailwind.config.js
+ create mode 100644 frontend/tsconfig.json
+ create mode 100644 frontend/vite.config.ts
+ create mode 100644 nginx/Dockerfile

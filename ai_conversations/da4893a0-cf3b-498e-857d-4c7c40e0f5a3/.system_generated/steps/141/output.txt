@@ -1,0 +1,94 @@
+Created At: 2026-11-12T18:54:05+03:00
+Completed At: 2026-11-12T18:54:11+03:00
+Command exited with code 0.
+
+Command output:
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'users'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'users'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_users_email' on '('email',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_users_email' on '('email',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_users_username' on '('username',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_users_username' on '('username',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'playlists'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'playlists'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlists_owner_id' on '('owner_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlists_owner_id' on '('owner_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'refresh_tokens'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'refresh_tokens'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_token_hash' on '('token_hash',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_token_hash' on '('token_hash',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_user_active' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_user_active' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_refresh_tokens_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'subscriptions'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'subscriptions'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_subscriptions_channel_id' on '('channel_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_subscriptions_channel_id' on '('channel_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_subscriptions_subscriber_id' on '('subscriber_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_subscriptions_subscriber_id' on '('subscriber_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'videos'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'videos'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_owner_created' on '('owner_id', 'created_at')'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_owner_created' on '('owner_id', 'created_at')'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_owner_id' on '('owner_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_owner_id' on '('owner_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_public_feed' on '('created_at',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_videos_public_feed' on '('created_at',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'comments'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'comments'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_author_id' on '('author_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_author_id' on '('author_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_video_created' on '('video_id', 'created_at')'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_video_created' on '('video_id', 'created_at')'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_comments_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'playlist_videos'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'playlist_videos'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlist_videos_playlist_id' on '('playlist_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlist_videos_playlist_id' on '('playlist_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlist_videos_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_playlist_videos_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'reports'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'reports'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_pending' on '('created_at',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_pending' on '('created_at',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_reporter_id' on '('reporter_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_reporter_id' on '('reporter_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_reports_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'video_access_list'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'video_access_list'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_access_list_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_access_list_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_access_list_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_access_list_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'video_reactions'
+INFO  [alembic.autogenerate.compare.tables] Detected added table 'video_reactions'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_reactions_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_reactions_user_id' on '('user_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_reactions_video_id' on '('video_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_video_reactions_video_id' on '('video_id',)'
+Generating /app/alembic/versions/b0365297d107_initial_schema.py ...  done
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> b0365297d107, initial_schema
+INFO  [alembic.runtime.migration] Running upgrade  -> b0365297d107, initial_schema

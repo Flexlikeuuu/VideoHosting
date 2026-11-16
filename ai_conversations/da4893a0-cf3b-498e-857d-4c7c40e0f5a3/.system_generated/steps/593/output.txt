@@ -1,0 +1,13 @@
+Created At: 2026-11-15T21:03:24+03:00
+Completed At: 2026-11-15T21:03:25+03:00
+Command exited with code 0.
+
+Command output:
+ M docker-compose.yml
+?? .dockerignore
+?? frontend/
+?? nginx/Dockerfile
+!! .env
+!! "TZ-YouTube-kopiya (1).docx"
+!! frontend/dist/
+!! frontend/node_modules/

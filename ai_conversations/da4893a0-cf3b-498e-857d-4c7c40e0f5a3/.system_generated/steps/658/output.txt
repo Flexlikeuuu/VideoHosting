@@ -1,0 +1,3 @@
+Created At: 2026-11-16T10:42:01+03:00
+Completed At: 2026-11-16T10:42:01+03:00
+Made 1 replacement in c:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\backend\scripts\seed.py starting at line 22 (+1/-1 lines).

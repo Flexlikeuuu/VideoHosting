@@ -1,0 +1,7 @@
+Created At: 2026-11-16T10:43:16+03:00
+Completed At: 2026-11-16T10:43:18+03:00
+Command exited with code 0.
+
+Command output:
+ Container youtubetask-nginx-1 Restarting 
+ Container youtubetask-nginx-1 Started 

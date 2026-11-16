@@ -1,0 +1,13 @@
+Created At: 2026-11-15T20:33:06+03:00
+Completed At: 2026-11-15T20:33:07+03:00
+Command exited with code 0.
+
+Command output:
+ M .gitignore
+ M backend/app/api/v1/routers/videos.py
+ M backend/app/worker.py
+?? backend/app/core/queue.py
+?? backend/app/core/s3_urls.py
+?? backend/app/core/validators.py
+?? backend/app/services/media.py
+?? backend/tests/test_media_pipeline.py

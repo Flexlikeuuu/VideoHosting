@@ -1,0 +1,13 @@
+Created At: 2026-11-16T10:43:32+03:00
+Completed At: 2026-11-16T10:43:33+03:00
+Command exited with code 0.
+
+Command output:
+Invoke-RestMethod : Internal Server Error
+At line:1 char:129
++ ...  {}; $res = Invoke-RestMethod -Uri "http://localhost/api/v1/videos";  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-RestMethod], WebExc 
+   eption
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeRestMethodCommand
+Total videos in feed: 0

@@ -1,0 +1,18 @@
+Created At: 2026-11-15T20:54:07+03:00
+Completed At: 2026-11-15T20:54:11+03:00
+Command exited with code 1.
+
+Command output:
+
+> youtube-clone-frontend@0.1.0 build
+> tsc && vite build
+
+src/components/Header.tsx(6,12): error TS6133: 'VideoIcon' is declared but its value is never read.
+src/components/Sidebar.tsx(5,3): error TS6133: 'Compass' is declared but its value is never read.
+src/components/Sidebar.tsx(7,3): error TS6133: 'ListVideo' is declared but its value is never read.
+src/context/AuthContext.tsx(2,28): error TS2307: Cannot find module './api' or its corresponding type declarations.
+src/context/AuthContext.tsx(3,22): error TS2307: Cannot find module './types' or its corresponding type declarations.
+src/pages/ModerationPage.tsx(7,44): error TS6133: 'AlertTriangle' is declared but its value is never read.
+src/pages/WatchPage.tsx(6,3): error TS6133: 'Share2' is declared but its value is never read.
+src/pages/WatchPage.tsx(7,3): error TS6133: 'FolderPlus' is declared but its value is never read.
+src/pages/WatchPage.tsx(30,10): error TS6133: 'dislikesCount' is declared but its value is never read.

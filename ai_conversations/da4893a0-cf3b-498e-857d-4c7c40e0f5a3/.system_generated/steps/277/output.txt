@@ -1,0 +1,6 @@
+Created At: 2026-11-15T20:29:40+03:00
+Completed At: 2026-11-15T20:29:41+03:00
+Command exited with code 0.
+
+Command output:
+{"status":"ok","services":{"postgres":{"status":"ok","detail":null},"redis":{"status":"ok","detail":null},"minio":{"status":"ok","detail":null}}}

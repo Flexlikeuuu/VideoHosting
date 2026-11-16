@@ -1,0 +1,24 @@
+Created At: 2026-11-12T18:10:25+03:00
+Completed At: 2026-11-12T18:10:30+03:00
+Command exited with code 0.
+
+Command output:
+Initialized empty Git repository in C:/Users/kiril/OneDrive/Рабочий стол/Лабы/AQA/YoutubeTask/.git/
+warning: in the working copy of '.agents/rules/core.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.antigravity/rules.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'AGENTS.md', LF will be replaced by CRLF the next time Git touches it
+[master (root-commit) 8a8c2eb] chore: initialize agent rules and project guidelines
+ 3 files changed, 99 insertions(+)
+ create mode 100644 .agents/rules/core.md
+ create mode 100644 .antigravity/rules.md
+ create mode 100644 AGENTS.md
+commit 8a8c2eb2cb79ac00f7c0ea8dd054852d622e11b3
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Thu Nov 12 18:10:29 2026 +0300
+
+    chore: initialize agent rules and project guidelines
+
+ .agents/rules/core.md | 12 ++++++++++
+ .antigravity/rules.md | 22 +++++++++++++++++
+ AGENTS.md             | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 99 insertions(+)

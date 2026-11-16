@@ -1,0 +1,22 @@
+Created At: 2026-11-12T18:04:31+03:00
+Completed At: 2026-11-12T18:04:36+03:00
+Command exited with code 1.
+
+Command output:
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+-a----        11/12/2026   5:58 PM          10494 TZ-YouTube-kopiya (1).docx                                           
+git : fatal: not a git repository (or any of the parent directories): .git
+строка:1 знак:144
++ ... g = $OutputEncoding } catch {}; Get-ChildItem -Force; git status 2>&1
++                                                           ~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: not a gi...ectories): .git:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+

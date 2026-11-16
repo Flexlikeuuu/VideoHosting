@@ -1,0 +1,55 @@
+Created At: 2026-11-16T10:43:37+03:00
+Completed At: 2026-11-16T10:43:39+03:00
+Command exited with code 0.
+
+Command output:
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+backend-1  |     await app(scope, receive, sender)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+backend-1  |     await self.app(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 683, in __call__
+backend-1  |     await self.middleware_stack(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 2811, in app
+backend-1  |     await route.handle(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 1839, in handle
+backend-1  |     await self.original_router.handle(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 2894, in handle
+backend-1  |     await included_router._handle_selected(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+backend-1  |     await original_route.handle(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 1328, in handle
+backend-1  |     await effective_context.app(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 166, in app
+backend-1  |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+backend-1  |     raise exc
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+backend-1  |     await app(scope, receive, sender)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 152, in app
+backend-1  |     response = await f(request)
+backend-1  |                ^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 745, in app
+backend-1  |     raw_response = await run_endpoint_function(
+backend-1  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 372, in run_endpoint_function
+backend-1  |     return await dependant.call(**values)
+backend-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/app/app/api/v1/routers/videos.py", line 46, in list_feed
+backend-1  |     return [VideoBaseResponse.model_validate(v) for v in videos]
+backend-1  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/main.py", line 792, in model_validate
+backend-1  |     return cls.__pydantic_validator__.validate_python(
+backend-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  | pydantic_core._pydantic_core.ValidationError: 1 validation error for VideoBaseResponse
+backend-1  | owner.email
+backend-1  |   value is not a valid email address: The part after the @-sign is a special-use or reserved name that cannot be used with email. [type=value_error, input_value='creator@youtube.local', input_type=str]
+backend-1  | 2026-11-16 07:43:37,979 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-16 07:43:37,980 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-16 07:43:37,980 INFO sqlalchemy.engine.Engine [cached since 121.8s ago] ()
+backend-1  | 2026-11-16 07:43:37,982 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     127.0.0.1:54616 - "GET /api/v1/health HTTP/1.1" 200 OK
+backend-1  | 2026-11-16 07:43:38,941 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-16 07:43:38,941 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-16 07:43:38,941 INFO sqlalchemy.engine.Engine [cached since 122.7s ago] ()
+backend-1  | 2026-11-16 07:43:38,944 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     172.20.0.7:49868 - "GET /api/v1/health HTTP/1.1" 200 OK

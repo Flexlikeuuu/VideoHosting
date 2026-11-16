@@ -1,0 +1,33 @@
+Created At: 2026-11-15T20:25:41+03:00
+Completed At: 2026-11-15T20:25:42+03:00
+Command exited with code 0.
+
+Command output:
+git : fatal: pathspec 'requirements.txt' did not match any files
+At line:1 char:122
++ ... utEncoding } catch {}; git add backend/ requirements.txt 2>&1; git st ...
++                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: pathspec...match any files:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ M backend/alembic/env.py
+ M backend/app/core/database.py
+ M backend/app/core/redis.py
+ M backend/app/main.py
+ M backend/requirements.txt
+?? "TZ-YouTube-kopiya (1).docx"
+?? backend/alembic/versions/b0365297d107_initial_schema.py
+?? backend/app/api/v1/dependencies.py
+?? backend/app/api/v1/routers/auth.py
+?? backend/app/api/v1/routers/videos.py
+?? backend/app/core/exceptions.py
+?? backend/app/core/rate_limit.py
+?? backend/app/core/security.py
+?? backend/app/models/
+?? backend/app/repositories/
+?? backend/app/schemas/auth.py
+?? backend/app/schemas/video.py
+?? backend/app/services/access.py
+?? backend/app/services/auth.py
+?? backend/pytest.ini
+?? backend/tests/

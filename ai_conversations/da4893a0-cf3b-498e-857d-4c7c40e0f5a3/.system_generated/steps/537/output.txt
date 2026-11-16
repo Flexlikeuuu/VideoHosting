@@ -1,0 +1,9 @@
+Created At: 2026-11-15T20:57:13+03:00
+Completed At: 2026-11-15T20:57:15+03:00
+Command exited with code 0.
+
+Command output:
+Root: 200 Len: 1035
+Watch SPA: 200 Len: 1035
+API Health: 200 Body: {"status":"ok","services":{"postgres":{"status":"ok","detail":null},"redis":{"status":"ok","detail":null},"minio":{"status":"ok","detail":null}}}
+Swagger Docs: 200

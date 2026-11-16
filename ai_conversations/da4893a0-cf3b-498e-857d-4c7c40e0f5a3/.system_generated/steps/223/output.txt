@@ -1,0 +1,267 @@
+Created At: 2026-11-15T20:25:09+03:00
+Completed At: 2026-11-15T20:25:18+03:00
+Command exited with code 1.
+
+Command output:
+ youtubetask-backend-1 Copying backend/app/core/database.py to youtubetask-backend-1:/app/app/core/database.py
+ youtubetask-backend-1 Copied backend/app/core/database.py to youtubetask-backend-1:/app/app/core/database.py
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_rbac_protection _____________________________
+
+self = <redis.asyncio.connection.Connection(host=redis,port=6379,db=0)>
+disable_decoding = False, timeout = None
+
+    async def read_response(
+        self,
+        disable_decoding: bool = False,
+        timeout: Optional[float] = None,
+        *,
+        disconnect_on_error: bool = True,
+        push_request: Optional[bool] = False,
+    ):
+        """Read the response from a previously sent command"""
+        read_timeout = timeout if timeout is not None else self.socket_timeout
+        host_error = self._host_error()
+        try:
+            if (
+                read_timeout is not None
+                and self.protocol in ["3", 3]
+                and not HIREDIS_AVAILABLE
+            ):
+                async with async_timeout(read_timeout):
+                    response = await self._parser.read_response(
+                        disable_decoding=disable_decoding, push_request=push_request
+                    )
+            elif read_timeout is not None:
+                async with async_timeout(read_timeout):
+                    response = await self._parser.read_response(
+                        disable_decoding=disable_decoding
+                    )
+            elif self.protocol in ["3", 3] and not HIREDIS_AVAILABLE:
+                response = await self._parser.read_response(
+                    disable_decoding=disable_decoding, push_request=push_request
+                )
+            else:
+>               response = await self._parser.read_response(
+                    disable_decoding=disable_decoding
+                )
+
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:562: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/redis/_parsers/hiredis.py:211: in read_response
+    await self.read_from_socket()
+/usr/local/lib/python3.12/site-packages/redis/_parsers/hiredis.py:189: in read_from_socket
+    buffer = await self._stream.read(self._read_size)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/streams.py:713: in read
+    await self._wait_for_data('read')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <StreamReader transport=<_SelectorSocketTransport closing fd=20>>
+func_name = 'read'
+
+    async def _wait_for_data(self, func_name):
+        """Wait until feed_data() or feed_eof() is called.
+    
+        If stream was paused, automatically resume it.
+        """
+        # StreamReader uses a future to link the protocol feed_data() method
+        # to a read coroutine. Running two read coroutines at the same time
+        # would have an unexpected behaviour. It would not possible to know
+        # which coroutine would get the next data.
+        if self._waiter is not None:
+            raise RuntimeError(
+                f'{func_name}() called while another coroutine is '
+                f'already waiting for incoming data')
+    
+        assert not self._eof, '_wait_for_data after EOF'
+    
+        # Waiting for data while paused will make deadlock, so prevent it.
+        # This is essential for readexactly(n) for case when n > self._limit.
+        if self._paused:
+            self._paused = False
+            self._transport.resume_reading()
+    
+        self._waiter = self._loop.create_future()
+        try:
+>           await self._waiter
+E           RuntimeError: Task <Task pending name='Task-11' coro=<test_rbac_protection() running at /app/tests/test_auth_and_access.py:105> cb=[_run_until_complete_cb() at /usr/local/lib/python3.12/asyncio/base_events.py:181]> got Future <Future pending> attached to a different loop
+
+/usr/local/lib/python3.12/asyncio/streams.py:545: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+client = <httpx.AsyncClient object at 0x7ee4c40d9e80>
+
+    @pytest.mark.asyncio
+    async def test_rbac_protection(client: AsyncClient):
+        suffix = uuid.uuid4().hex[:6]
+    
+        async with async_session_factory() as session:
+            norm_user = User(
+                email=f"norm_{suffix}@example.com",
+                username=f"norm_{suffix}",
+                password_hash=hash_password("password"),
+                role=UserRole.USER,
+                channel_name="Norm",
+            )
+            mod_user = User(
+                email=f"mod_{suffix}@example.com",
+                username=f"mod_{suffix}",
+                password_hash=hash_password("password"),
+                role=UserRole.MODERATOR,
+                channel_name="Mod",
+            )
+            session.add_all([norm_user, mod_user])
+            await session.commit()
+    
+        # Anonymous user gets 401
+        anon_resp = await client.get("/api/v1/videos/moderation/test-role-protected")
+        assert anon_resp.status_code == 401
+    
+        # Regular user gets 403 Forbidden
+>       login_norm = await client.post(
+            "/api/v1/auth/login",
+            json={"username_or_email": norm_user.username, "password": "password"},
+        )
+
+tests/test_auth_and_access.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1859: in post
+    return await self.request(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/httpx/_transports/asgi.py:170: in handle_async_request
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+/usr/local/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+/usr/local/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/api/v1/routers/auth.py:90: in login
+    allowed, _ = await auth_rate_limiter.is_allowed(
+app/core/rate_limit.py:18: in is_allowed
+    current = await redis.incr(key)
+              ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:646: in execute_command
+    return await conn.retry.call_with_retry(
+/usr/local/lib/python3.12/site-packages/redis/asyncio/retry.py:59: in call_with_retry
+    return await do()
+           ^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:620: in _send_command_parse_response
+    return await self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/client.py:667: in parse_response
+    response = await connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:582: in read_response
+    await self.disconnect(nowait=True)
+/usr/local/lib/python3.12/site-packages/redis/asyncio/connection.py:438: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+    ^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/streams.py:358: in close
+    return self._transport.close()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/asyncio/selector_events.py:1213: in close
+    super().close()
+/usr/local/lib/python3.12/asyncio/selector_events.py:875: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+/usr/local/lib/python3.12/asyncio/base_events.py:799: in call_soon
+    self._check_closed()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_UnixSelectorEventLoop running=False closed=True debug=False>
+
+    def _check_closed(self):
+        if self._closed:
+>           raise RuntimeError('Event loop is closed')
+E           RuntimeError: Event loop is closed
+
+/usr/local/lib/python3.12/asyncio/base_events.py:545: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 17:25:15,343 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-15 17:25:15,345 INFO sqlalchemy.engine.Engine INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN), ($10::UUID, $11::VARCHAR, $12::VARCHAR, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR, $17::VARCHAR, $18::BOOLEAN) RETURNING users.created_at, users.updated_at, users.id
+2026-11-15 17:25:15,345 INFO sqlalchemy.engine.Engine [generated in 0.00036s (insertmanyvalues) 1/1 (ordered)] (UUID('740246f7-c4fc-41a3-94b1-e86371fa518c'), 'norm_3fdd92@example.com', 'norm_3fdd92', '$argon2id$v=19$m=65536,t=3,p=4$/RKyiMYyt1GAGM+DMosdNA$nqMDU9dvVHo6yPt8juT1oK0/maXcY8Ua2esT5FqOAL4', <UserRole.USER: 'user'>, 'Norm', None, None, True, UUID('38dd7dd0-0697-4582-977e-63abae6c9ebb'), 'mod_3fdd92@example.com', 'mod_3fdd92', '$argon2id$v=19$m=65536,t=3,p=4$nG9RWzns9GA6m1uBU0WCIQ$lCBy0tKigw/EmekVAD754d0+iL9Ju5hCbFQs3YykN3Q', <UserRole.MODERATOR: 'moderator'>, 'Mod', None, None, True)
+2026-11-15 17:25:15,351 INFO sqlalchemy.engine.Engine COMMIT
+------------------------------ Captured log call -------------------------------
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1866 INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN), ($10::UUID, $11::VARCHAR, $12::VARCHAR, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR, $17::VARCHAR, $18::BOOLEAN) RETURNING users.created_at, users.updated_at, users.id
+INFO     sqlalchemy.engine.Engine:base.py:2102 [generated in 0.00036s (insertmanyvalues) 1/1 (ordered)] (UUID('740246f7-c4fc-41a3-94b1-e86371fa518c'), 'norm_3fdd92@example.com', 'norm_3fdd92', '$argon2id$v=19$m=65536,t=3,p=4$/RKyiMYyt1GAGM+DMosdNA$nqMDU9dvVHo6yPt8juT1oK0/maXcY8Ua2esT5FqOAL4', <UserRole.USER: 'user'>, 'Norm', None, None, True, UUID('38dd7dd0-0697-4582-977e-63abae6c9ebb'), 'mod_3fdd92@example.com', 'mod_3fdd92', '$argon2id$v=19$m=65536,t=3,p=4$nG9RWzns9GA6m1uBU0WCIQ$lCBy0tKigw/EmekVAD754d0+iL9Ju5hCbFQs3YykN3Q', <UserRole.MODERATOR: 'moderator'>, 'Mod', None, None, True)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+=============================== warnings summary ===============================
+tests/test_auth_and_access.py::test_auth_registration_and_login_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1768: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1859: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1966: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_auth_and_access.py::test_rbac_protection - RuntimeError: Ev...
+1 failed, 2 passed, 8 warnings in 4.54s

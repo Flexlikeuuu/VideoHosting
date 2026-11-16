@@ -1,0 +1,10 @@
+Created At: 2026-11-15T20:24:00+03:00
+Completed At: 2026-11-15T20:24:03+03:00
+Command exited with code 0.
+
+Command output:
+ERROR: usage: -c [options] [file_or_dir] [file_or_dir] [...]
+-c: error: unrecognized arguments: -tb=short
+  inifile: None
+  rootdir: /app
+

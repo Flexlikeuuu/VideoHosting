@@ -1,0 +1,3 @@
+Created At: 2026-11-15T20:25:04+03:00
+Completed At: 2026-11-15T20:25:05+03:00
+Made 1 replacement in c:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\backend\app\core\database.py starting at line 1 (+2/-1 lines).

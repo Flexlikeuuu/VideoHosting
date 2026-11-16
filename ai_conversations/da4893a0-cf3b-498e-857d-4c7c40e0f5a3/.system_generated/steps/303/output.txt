@@ -1,0 +1,8 @@
+Created At: 2026-11-15T20:31:54+03:00
+Completed At: 2026-11-15T20:31:56+03:00
+Command exited with code 0.
+
+Command output:
+STATUS: 403
+BODY: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>AccessDenied</Code><Message>Access Denied.</Message><Key>processed/913fba5e-0f05-4c45-85ca-06249539ba4f.mp4</Key><BucketName>videos</BucketName><Resource>/videos/processed/913fba5e-0f05-4c45-85ca-06249539ba4f.mp4</Resource><RequestId>18E84845C4AB7876</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>

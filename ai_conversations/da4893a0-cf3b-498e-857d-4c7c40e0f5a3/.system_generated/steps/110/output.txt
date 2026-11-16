@@ -1,0 +1,107 @@
+Created At: 2026-11-12T18:23:05+03:00
+Completed At: 2026-11-12T18:23:09+03:00
+Command exited with code 0.
+
+Command output:
+The following paths are ignored by one of your .gitignore files:
+frontend/dist
+hint: Use -f if you really want to add them.
+hint: Disable this message with "git config advice.addIgnoredFile false"
+warning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Makefile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/Dockerfile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/alembic.ini', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/alembic/env.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/alembic/script.py.mako', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/health.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/database.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/redis.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/storage.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/schemas/health.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/health.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/worker.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/entrypoint.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'deploy.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docker-compose.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'nginx/nginx.conf', LF will be replaced by CRLF the next time Git touches it
+[master 101b93b] feat: setup docker compose infrastructure, nginx, and fastapi skeleton
+ 29 files changed, 831 insertions(+)
+ create mode 100644 .env.example
+ create mode 100644 .gitignore
+ create mode 100644 Makefile
+ create mode 100644 backend/Dockerfile
+ create mode 100644 backend/alembic.ini
+ create mode 100644 backend/alembic/env.py
+ create mode 100644 backend/alembic/script.py.mako
+ create mode 100644 backend/alembic/versions/.gitkeep
+ create mode 100644 backend/app/__init__.py
+ create mode 100644 backend/app/api/__init__.py
+ create mode 100644 backend/app/api/v1/__init__.py
+ create mode 100644 backend/app/api/v1/routers/__init__.py
+ create mode 100644 backend/app/api/v1/routers/health.py
+ create mode 100644 backend/app/core/__init__.py
+ create mode 100644 backend/app/core/config.py
+ create mode 100644 backend/app/core/database.py
+ create mode 100644 backend/app/core/redis.py
+ create mode 100644 backend/app/core/storage.py
+ create mode 100644 backend/app/main.py
+ create mode 100644 backend/app/schemas/__init__.py
+ create mode 100644 backend/app/schemas/health.py
+ create mode 100644 backend/app/services/__init__.py
+ create mode 100644 backend/app/services/health.py
+ create mode 100644 backend/app/worker.py
+ create mode 100755 backend/entrypoint.sh
+ create mode 100644 backend/requirements.txt
+ create mode 100755 deploy.sh
+ create mode 100644 docker-compose.yml
+ create mode 100644 nginx/nginx.conf
+commit 101b93bc10a8105d97262ab175a93161c88d91c7
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Thu Nov 12 18:23:08 2026 +0300
+
+    feat: setup docker compose infrastructure, nginx, and fastapi skeleton
+
+ .env.example                           |  37 ++++++++
+ .gitignore                             |  26 ++++++
+ Makefile                               |  25 +++++
+ backend/Dockerfile                     |  24 +++++
+ backend/alembic.ini                    |  38 ++++++++
+ backend/alembic/env.py                 |  57 ++++++++++++
+ backend/alembic/script.py.mako         |  25 +++++
+ backend/alembic/versions/.gitkeep      |   1 +
+ backend/app/__init__.py                |   1 +
+ backend/app/api/__init__.py            |   1 +
+ backend/app/api/v1/__init__.py         |   1 +
+ backend/app/api/v1/routers/__init__.py |   1 +
+ backend/app/api/v1/routers/health.py   |  29 ++++++
+ backend/app/core/__init__.py           |   1 +
+ backend/app/core/config.py             |  41 +++++++++
+ backend/app/core/database.py           |  43 +++++++++
+ backend/app/core/redis.py              |  31 +++++++
+ backend/app/core/storage.py            |  29 ++++++
+ backend/app/main.py                    |  42 +++++++++
+ backend/app/schemas/__init__.py        |   1 +
+ backend/app/schemas/health.py          |  27 ++++++
+ backend/app/services/__init__.py       |   1 +
+ backend/app/services/health.py         |  30 ++++++
+ backend/app/worker.py                  |  17 ++++
+ backend/entrypoint.sh                  |   9 ++
+ backend/requirements.txt               |  16 ++++
+ deploy.sh                              |  28 ++++++
+ docker-compose.yml                     | 164 +++++++++++++++++++++++++++++++++
+ nginx/nginx.conf                       |  85 +++++++++++++++++
+ 29 files changed, 831 insertions(+)
+
+commit 674f4877c2381911e57eb2271da15bd4a310bc14
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Thu Nov 12 18:12:30 2026 +0300
+
+    docs: add system architecture and database schema
+
+ docs/ARCHITECTURE.md | 154 +++++++++++++++++++++++
+ docs/DATABASE.md     | 342 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 496 insertions(+)

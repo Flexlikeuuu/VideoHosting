@@ -1,0 +1,36 @@
+Created At: 2026-11-15T20:30:35+03:00
+Completed At: 2026-11-15T20:30:41+03:00
+Command exited with code 1.
+
+Command output:
+ youtubetask-backend-1 Copying backend/tests/test_media_pipeline.py to youtubetask-backend-1:/app/tests/test_media_pipeline.py
+ youtubetask-backend-1 Copied backend/tests/test_media_pipeline.py to youtubetask-backend-1:/app/tests/test_media_pipeline.py
+Register status: 201
+Upload status: 201
+Uploaded video 0d26c46d-825f-4382-ba5c-fe42d950dc7f, initial status: processing
+[1s] Current video status: processing
+[2s] Current video status: ready
+Video successfully processed to ready!
+Duration: 3
+Thumbnail object key: thumbnails/0d26c46d-825f-4382-ba5c-fe42d950dc7f.jpg
+Stream HTTP status: 502
+Content-Range header: None
+Content-Length header: 157
+Accept-Ranges header: None
+Bytes received: 157
+Traceback (most recent call last):
+  File "/app/tests/test_media_pipeline.py", line 89, in <module>
+    asyncio.run(main())
+  File "/usr/local/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/app/tests/test_media_pipeline.py", line 75, in main
+    assert stream_resp.status_code == 206
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,13 @@
+Created At: 2026-11-12T18:51:03+03:00
+Completed At: 2026-11-12T18:51:04+03:00
+Command exited with code 0.
+
+Command output:
+NAME                       IMAGE                    COMMAND                  SERVICE      CREATED          STATUS                      PORTS
+youtubetask-backend-1      youtubetask-backend      "/app/entrypoint.sh …"   backend      28 minutes ago   Exited (0) 3 minutes ago    
+youtubetask-minio-1        pgsty/silo:latest        "/usr/bin/docker-ent…"   minio        28 minutes ago   Exited (0) 3 minutes ago    
+youtubetask-minio-init-1   youtubetask-minio-init   "/app/entrypoint.sh …"   minio-init   28 minutes ago   Exited (0) 28 minutes ago   
+youtubetask-nginx-1        nginx:1.27-alpine        "/docker-entrypoint.…"   nginx        28 minutes ago   Exited (0) 3 minutes ago    
+youtubetask-postgres-1     postgres:16-alpine       "docker-entrypoint.s…"   postgres     28 minutes ago   Exited (0) 3 minutes ago    
+youtubetask-redis-1        redis:7-alpine           "docker-entrypoint.s…"   redis        28 minutes ago   Exited (0) 3 minutes ago    
+youtubetask-worker-1       youtubetask-worker       "/app/entrypoint.sh …"   worker       28 minutes ago   Exited (0) 3 minutes ago    

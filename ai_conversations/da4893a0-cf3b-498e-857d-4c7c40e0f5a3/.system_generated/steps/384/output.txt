@@ -1,0 +1,16 @@
+Created At: 2026-11-15T20:39:46+03:00
+Completed At: 2026-11-15T20:39:47+03:00
+Command exited with code 0.
+
+Command output:
+ M backend/app/api/v1/routers/videos.py
+ M backend/app/main.py
+ M backend/app/repositories/video.py
+?? backend/app/api/v1/routers/channels.py
+?? backend/app/api/v1/routers/comments.py
+?? backend/app/api/v1/routers/moderation.py
+?? backend/app/api/v1/routers/playlists.py
+?? backend/app/repositories/social.py
+?? backend/app/schemas/social.py
+?? backend/app/services/social.py
+?? backend/tests/test_social_and_moderation.py

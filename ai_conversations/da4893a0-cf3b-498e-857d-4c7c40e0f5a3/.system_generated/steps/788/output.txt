@@ -1,0 +1,31 @@
+Created At: 2026-11-16T10:55:55+03:00
+Completed At: 2026-11-16T10:55:56+03:00
+Command exited with code 0.
+
+Command output:
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+d-----        11/12/2026   6:05 PM                .agents                                                              
+d-----        11/12/2026   6:05 PM                .antigravity                                                         
+d--h--        11/16/2026  10:52 AM                .git                                                                 
+d-----        11/16/2026  10:47 AM                backend                                                              
+d-----        11/12/2026   6:11 PM                docs                                                                 
+d-----        11/15/2026   8:55 PM                frontend                                                             
+d-----        11/15/2026   8:59 PM                nginx                                                                
+-a----        11/15/2026   9:02 PM             93 .dockerignore                                                        
+-a----        11/12/2026   6:13 PM            931 .env                                                                 
+-a----        11/12/2026   6:13 PM            931 .env.example                                                         
+-a----        11/16/2026  10:55 AM            305 .gitignore                                                           
+-a----        11/12/2026   6:05 PM           8089 AGENTS.md                                                            
+-a----        11/16/2026  10:45 AM            974 deploy.sh                                                            
+-a----        11/16/2026  10:41 AM           4244 docker-compose.yml                                                   
+-a----        11/16/2026  10:49 AM            466 Makefile                                                             
+-a----        11/16/2026  10:50 AM          11726 README.md                                                            
+-a----        11/12/2026   5:58 PM          10494 TZ-YouTube-kopiya (1).docx                                           
+
+

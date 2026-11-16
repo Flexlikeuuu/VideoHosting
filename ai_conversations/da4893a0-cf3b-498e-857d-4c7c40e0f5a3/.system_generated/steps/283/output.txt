@@ -1,0 +1,9 @@
+Created At: 2026-11-15T20:30:16+03:00
+Completed At: 2026-11-15T20:30:19+03:00
+Command exited with code 1.
+
+Command output:
+  File "<string>", line 28
+    print(f'Uploaded video {video_id}, initial status: {video_data[" status\]}')
+                                                                   ^
+SyntaxError: unterminated string literal (detected at line 28)

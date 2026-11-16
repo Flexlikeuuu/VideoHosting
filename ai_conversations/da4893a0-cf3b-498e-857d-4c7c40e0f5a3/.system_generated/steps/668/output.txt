@@ -1,0 +1,16 @@
+Created At: 2026-11-16T10:42:53+03:00
+Completed At: 2026-11-16T10:42:56+03:00
+Command exited with code 0.
+
+Command output:
+Invoke-RestMethod : 
+502 Bad Gateway
+502 Bad Gateway
+nginx/1.27.5
+At line:1 char:129
++ ...  {}; $res = Invoke-RestMethod -Uri "http://localhost/api/v1/videos";  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-RestMethod], WebExc 
+   eption
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeRestMethodCommand
+Total videos in feed: 0

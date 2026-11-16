@@ -1,0 +1,19 @@
+Created At: 2026-11-16T10:55:47+03:00
+Completed At: 2026-11-16T10:55:48+03:00
+Command exited with code 0.
+
+Command output:
+
+
+    Каталог: C:\Users\kiril\.gemini
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+d-----        11/16/2026  10:55 AM                antigravity                                                          
+d-----        11/16/2026  10:36 AM                bin                                                                  
+d-----        11/15/2026  11:16 AM                config                                                               
+d-----         10/1/2026   9:41 AM                logs                                                                 
+d-----        10/23/2026  12:31 PM                sandbox                                                              
+
+

@@ -1,0 +1,43 @@
+Created At: 2026-11-15T21:03:31+03:00
+Completed At: 2026-11-15T21:03:33+03:00
+Command exited with code 0.
+
+Command output:
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docker-compose.yml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.dockerignore
+	frontend/index.html
+	frontend/package-lock.json
+	frontend/package.json
+	frontend/postcss.config.js
+	frontend/src/App.tsx
+	frontend/src/api.ts
+	frontend/src/components/Header.tsx
+	frontend/src/components/Sidebar.tsx
+	frontend/src/components/VideoCard.tsx
+	frontend/src/context/AuthContext.tsx
+	frontend/src/context/ThemeContext.tsx
+	frontend/src/index.css
+	frontend/src/main.tsx
+	frontend/src/pages/ChannelPage.tsx
+	frontend/src/pages/HomePage.tsx
+	frontend/src/pages/LoginPage.tsx
+	frontend/src/pages/ModerationPage.tsx
+	frontend/src/pages/RegisterPage.tsx
+	frontend/src/pages/SearchPage.tsx
+	frontend/src/pages/UploadPage.tsx
+	frontend/src/pages/WatchPage.tsx
+	frontend/src/types.ts
+	frontend/src/utils.ts
+	frontend/tailwind.config.js
+	frontend/tsconfig.json
+	frontend/vite.config.ts
+	nginx/Dockerfile
+
+no changes added to commit (use "git add" and/or "git commit -a")

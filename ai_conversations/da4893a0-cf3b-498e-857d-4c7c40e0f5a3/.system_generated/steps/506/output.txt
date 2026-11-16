@@ -1,0 +1,3 @@
+Created At: 2026-11-15T20:54:27+03:00
+Completed At: 2026-11-15T20:54:28+03:00
+Made 1 replacement in c:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend\src\pages\ModerationPage.tsx starting at line 7 (+1/-1 lines).

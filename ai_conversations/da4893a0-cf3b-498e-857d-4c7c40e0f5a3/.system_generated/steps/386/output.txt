@@ -1,0 +1,44 @@
+Created At: 2026-11-15T20:39:53+03:00
+Completed At: 2026-11-15T20:39:55+03:00
+Command exited with code 0.
+
+Command output:
+warning: in the working copy of 'backend/app/api/v1/routers/videos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/video.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/channels.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/comments.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/moderation.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/playlists.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/social.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/schemas/social.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/social.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_social_and_moderation.py', LF will be replaced by CRLF the next time Git touches it
+[master d12e01f] feat: implement feed, search, social features, playlists, and moderation
+ 11 files changed, 1242 insertions(+), 3 deletions(-)
+ create mode 100644 backend/app/api/v1/routers/channels.py
+ create mode 100644 backend/app/api/v1/routers/comments.py
+ create mode 100644 backend/app/api/v1/routers/moderation.py
+ create mode 100644 backend/app/api/v1/routers/playlists.py
+ create mode 100644 backend/app/repositories/social.py
+ create mode 100644 backend/app/schemas/social.py
+ create mode 100644 backend/app/services/social.py
+ create mode 100644 backend/tests/test_social_and_moderation.py
+commit d12e01f78850b9d32058ea34697d0c6232a4aaf2
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Sun Nov 15 20:39:55 2026 +0300
+
+    feat: implement feed, search, social features, playlists, and moderation
+
+ backend/app/api/v1/routers/channels.py      |  68 ++++++++
+ backend/app/api/v1/routers/comments.py      |  26 +++
+ backend/app/api/v1/routers/moderation.py    |  62 +++++++
+ backend/app/api/v1/routers/playlists.py     |  91 +++++++++++
+ backend/app/api/v1/routers/videos.py        | 120 +++++++++++++-
+ backend/app/main.py                         |   8 +
+ backend/app/repositories/social.py          | 242 ++++++++++++++++++++++++++++
+ backend/app/repositories/video.py           |  74 ++++++++-
+ backend/app/schemas/social.py               | 112 +++++++++++++
+ backend/app/services/social.py              | 233 ++++++++++++++++++++++++++
+ backend/tests/test_social_and_moderation.py | 209 ++++++++++++++++++++++++
+ 11 files changed, 1242 insertions(+), 3 deletions(-)

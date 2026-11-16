@@ -1,0 +1,35 @@
+Created At: 2026-11-12T19:07:27+03:00
+Completed At: 2026-11-12T19:07:28+03:00
+Command exited with code 0.
+
+Command output:
+backend-1  |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 871, in generate_schema
+backend-1  |     schema = self._generate_schema_inner(obj, origin)
+backend-1  |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1176, in _generate_schema_inner
+backend-1  |     return self._model_schema(obj)
+backend-1  |            ^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 998, in _model_schema
+backend-1  |     {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+backend-1  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1308, in _generate_md_field_schema
+backend-1  |     schema, metadata = self._common_field_schema(name, field_info, decorators)
+backend-1  |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1365, in _common_field_schema
+backend-1  |     schema = self._apply_annotations(
+backend-1  |              ^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2380, in _apply_annotations
+backend-1  |     schema = inner_handler(source_type)
+backend-1  |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2366, in inner_handler
+backend-1  |     schema = self._generate_schema_from_get_schema_method(obj, source_type)
+backend-1  |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1058, in _generate_schema_from_get_schema_method
+backend-1  |     schema = get_schema(
+backend-1  |              ^^^^^^^^^^^
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 1080, in __get_pydantic_core_schema__
+backend-1  |     import_email_validator()
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 1042, in import_email_validator
+backend-1  |     raise ImportError("email-validator is not installed, run `pip install 'pydantic[email]'`") from e
+backend-1  | ImportError: email-validator is not installed, run `pip install 'pydantic[email]'`

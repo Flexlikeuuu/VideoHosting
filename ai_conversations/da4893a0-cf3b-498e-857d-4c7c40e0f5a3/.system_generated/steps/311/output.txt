@@ -1,0 +1,11 @@
+Created At: 2026-11-15T20:32:25+03:00
+Completed At: 2026-11-15T20:32:28+03:00
+Command exited with code 0.
+
+Command output:
+ youtubetask-backend-1 Copying backend/app/core/s3_urls.py to youtubetask-backend-1:/app/app/core/s3_urls.py
+ youtubetask-backend-1 Copied backend/app/core/s3_urls.py to youtubetask-backend-1:/app/app/core/s3_urls.py
+ youtubetask-backend-1 Copying backend/app/api/v1/routers/videos.py to youtubetask-backend-1:/app/app/api/v1/routers/videos.py
+ youtubetask-backend-1 Copied backend/app/api/v1/routers/videos.py to youtubetask-backend-1:/app/app/api/v1/routers/videos.py
+ Container youtubetask-backend-1 Restarting 
+ Container youtubetask-backend-1 Started 

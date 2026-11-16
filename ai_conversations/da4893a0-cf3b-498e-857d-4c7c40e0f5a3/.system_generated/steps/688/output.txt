@@ -1,0 +1,32 @@
+Created At: 2026-11-16T10:44:14+03:00
+Completed At: 2026-11-16T10:44:16+03:00
+Command exited with code 0.
+
+Command output:
+Total videos in feed: 19
+
+id                                   title                                                 visibility views_count likes
+                                                                                                                  _coun
+                                                                                                                      t
+--                                   -----                                                 ---------- ----------- -----
+eca9a301-ecad-4077-b20b-7d49d8e0f57c Controversial Video: Questionable Content             public             310     8
+f7903f55-89ca-48aa-900a-c17edc32f163 Game Highlights & Speedrun World Records              public            6200   412
+794d79bd-78a4-452d-913a-e302acdcc770 DevOps & Docker Compose: Production Ubuntu Deployment public             940    78
+3d66ee6f-8b30-4bd6-bf0c-dc53ef7aca4c Coding Live: Video Streaming with FastAPI & Nginx     public            3890   210
+dd730518-b0ef-47a8-934d-5fdcac5189cb Tech Review: Cloud Architecture 2026                  public            1420    56
+6789b00b-5f37-48d4-b904-a22532f067c3 FastAPI & React Full Tutorial                         public               2     0
+9be35a5d-b055-46a1-b1f6-abccafe325fb Sample Test Video                                     public               1     0
+41610fb0-e032-4f72-a0c2-eb1de3d406a1 FastAPI & React Full Tutorial                         public               1     0
+0bf6a023-f871-48bc-a7af-1b49d5bbc8c7 FastAPI & React Full Tutorial                         public               1     0
+1172067f-a1b8-479f-a01e-336ca334026c FastAPI & React Full Tutorial                         public               1     0
+523b3687-512b-4888-bdbf-0e2e551168b2 FastAPI & React Full Tutorial                         public               1     0
+39804a4d-b93e-4187-8eae-9a72a2f29335 FastAPI & React Full Tutorial                         public               0     0
+6b416aa4-1ab3-4874-9790-465fe04e01d2 FastAPI & React Full Tutorial                         public               0     0
+f946c0a6-c95e-4721-ae5b-b9442c362595 FastAPI & React Full Tutorial                         public               0     0
+0c92ac1a-4e58-4122-adcc-21febbb47072 FastAPI & React Full Tutorial                         public               0     0
+3f3814da-a5d4-426f-a211-8741315a04f5 Sample Test Video                                     public               1     0
+913fba5e-0f05-4c45-85ca-06249539ba4f Sample Test Video                                     public               0     0
+1f003c79-b1ff-4e70-86f9-faf34d195e1b Sample Test Video                                     public               0     0
+0d26c46d-825f-4382-ba5c-fe42d950dc7f Sample Test Video                                     public               0     0
+
+

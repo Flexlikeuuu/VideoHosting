@@ -1,0 +1,13 @@
+Created At: 2026-11-16T10:52:21+03:00
+Completed At: 2026-11-16T10:52:22+03:00
+Command exited with code 0.
+
+Command output:
+warning: in the working copy of 'Makefile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/videos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/pytest.ini', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'deploy.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docker-compose.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scripts/seed.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_e2e_and_security.py', LF will be replaced by CRLF the next time Git touches it

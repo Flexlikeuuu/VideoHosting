@@ -1,0 +1,17 @@
+Created At: 2026-11-16T10:45:02+03:00
+Completed At: 2026-11-16T10:45:03+03:00
+Command exited with code 0.
+
+Command output:
+Logged in as: moderator role: moderator
+Pending reports: 5
+
+id                                   reason                                                                            
+--                                   ------                                                                            
+bd0300ae-f495-4e96-bdde-5932f22d6e40 Ð¡Ð¿Ð°Ð¼, ÐºÐ»Ð¸ÐºÐ±ÐµÐ¹Ñ Ð¸ Ð²Ð²Ð¾Ð´ÑÑÐµÐµ Ð² Ð·Ð°Ð±Ð»ÑÐ¶Ð´ÐµÐ½Ð¸Ðµ Ð¾Ð¿Ð¸...
+3c600fb1-7a60-460b-8e8a-461e96f40238 ÐÐ¾Ð´Ð¾Ð·ÑÐ¸ÑÐµÐ»ÑÐ½Ð¾Ðµ ÑÐ¾Ð´ÐµÑÐ¶Ð°Ð½Ð¸Ðµ, ÑÑÐµÐ±ÑÐµÑÑÑ ÑÐºÑÐ¿Ð...
+9f2b7891-b357-4d8b-b27a-df8dfa7925c7 Inappropriate content                                                             
+dcc411d5-d05f-42a3-9e23-be53c47f8e68 Inappropriate content                                                             
+596835c8-4bd7-4fac-bb4d-8f9febe97129 Inappropriate content                                                             
+
+

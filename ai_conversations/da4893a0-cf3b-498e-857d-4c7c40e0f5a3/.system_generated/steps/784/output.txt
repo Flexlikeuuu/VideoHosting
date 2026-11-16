@@ -1,0 +1,31 @@
+Created At: 2026-11-16T10:55:33+03:00
+Completed At: 2026-11-16T10:55:34+03:00
+Command exited with code 0.
+
+Command output:
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\.agents
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+d-----        11/12/2026   6:05 PM                rules                                                                
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\.agents\rules
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+-a----        11/12/2026   6:05 PM           1621 core.md                                                              
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\.antigravity
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+-a----        11/12/2026   6:05 PM           1899 rules.md                                                             
+
+

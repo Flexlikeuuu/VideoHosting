@@ -1,0 +1,20 @@
+Created At: 2026-11-15T20:32:33+03:00
+Completed At: 2026-11-15T20:32:36+03:00
+Command exited with code 0.
+
+Command output:
+Register status: 201
+Upload status: 201
+Uploaded video 3f3814da-a5d4-426f-a211-8741315a04f5, initial status: processing
+[1s] Current video status: ready
+Video successfully processed to ready!
+Duration: 3
+Thumbnail object key: thumbnails/3f3814da-a5d4-426f-a211-8741315a04f5.jpg
+Stream HTTP status: 206
+Content-Range header: bytes 0-1024/65193
+Content-Length header: 1025
+Accept-Ranges header: bytes
+Bytes received: 1025
+Thumbnail HTTP status: 200
+Thumbnail content-type: image/jpeg
+=== ALL STAGE 4 MEDIA PIPELINE CHECKS PASSED ===

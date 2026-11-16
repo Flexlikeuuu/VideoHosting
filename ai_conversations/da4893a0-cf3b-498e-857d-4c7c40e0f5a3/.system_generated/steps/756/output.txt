@@ -1,0 +1,76 @@
+Created At: 2026-11-16T10:50:41+03:00
+Completed At: 2026-11-16T10:50:42+03:00
+Command exited with code 0.
+
+Command output:
+warning: in the working copy of 'Makefile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/videos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'deploy.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docker-compose.yml', LF will be replaced by CRLF the next time Git touches it
+diff --git a/Makefile b/Makefile
+index 367e3d9..d3facbc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,4 @@
+-.PHONY: up down build ps logs health migrate test
++.PHONY: up down build ps logs health migrate seed test
+ 
+ up:
+ 	./deploy.sh
+@@ -21,5 +21,8 @@ health:
+ migrate:
+ 	docker compose exec backend alembic upgrade head
+ 
++seed:
++	docker compose exec -T backend python scripts/seed.py
++
+ test:
+-	docker compose exec backend pytest -v
++	docker compose exec -T -e PYTHONPATH=/app backend pytest -v
+diff --git a/backend/app/api/v1/routers/videos.py b/backend/app/api/v1/routers/videos.py
+index 8f362d7..8664bc8 100644
+--- a/backend/app/api/v1/routers/videos.py
++++ b/backend/app/api/v1/routers/videos.py
+@@ -156,6 +156,7 @@ async def stream_video(
+     headers = {
+         "X-Accel-Redirect": f"/_internal_s3{s3_subpath}",
+         "Content-Type": "video/mp4",
++        "Accept-Ranges": "bytes",
+     }
+     return Response(content=b"", status_code=status.HTTP_200_OK, headers=headers)
+ 
+diff --git a/deploy.sh b/deploy.sh
+index b43c6dc..8a5c773 100755
+--- a/deploy.sh
++++ b/deploy.sh
+@@ -14,6 +14,8 @@ for i in $(seq 1 30); do
+   if docker compose ps --format json | grep -q '"Health":"healthy"'; then
+     if curl -fsS "http://localhost:${APP_PORT:-80}/api/v1/health" >/dev/null 2>&1; then
+       echo "[deploy] System is healthy!"
++      echo "[deploy] Seeding database and media storage..."
++      docker compose exec -T backend python scripts/seed.py
+       echo "  - App:     http://localhost:${APP_PORT:-80}"
+       echo "  - Swagger: http://localhost:${APP_PORT:-80}/docs"
+       echo "  - Health:  http://localhost:${APP_PORT:-80}/api/v1/health"
+diff --git a/docker-compose.yml b/docker-compose.yml
+index 14f752b..983adcb 100644
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -89,6 +89,8 @@ services:
+       - .env
+     environment:
+       RUN_MIGRATIONS: "true"
++    volumes:
++      - ./backend:/app
+     depends_on:
+       postgres:
+         condition: service_healthy
+@@ -115,6 +117,8 @@ services:
+     environment:
+       RUN_MIGRATIONS: "false"
+     command: ["arq", "app.worker.WorkerSettings"]
++    volumes:
++      - ./backend:/app
+     depends_on:
+       postgres:
+         condition: service_healthy

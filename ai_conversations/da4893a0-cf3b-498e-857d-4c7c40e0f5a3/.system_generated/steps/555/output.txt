@@ -1,0 +1,40 @@
+Command exited with code 0.
+
+Command output:
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/local/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /app
+configfile: pytest.ini
+plugins: asyncio-0.26.0, anyio-4.16.0
+asyncio: mode=Mode.AUTO, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 4 items
+
+tests/test_auth_and_access.py::test_auth_registration_and_login_flow PASSED [ 25%]
+tests/test_auth_and_access.py::test_rbac_protection PASSED               [ 50%]
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow PASSED [ 75%]
+tests/test_social_and_moderation.py::test_social_features_and_moderation_flow PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_auth_and_access.py::test_auth_registration_and_login_flow
+tests/test_auth_and_access.py::test_rbac_protection
+tests/test_auth_and_access.py::test_rbac_protection
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+tests/test_social_and_moderation.py::test_social_features_and_moderation_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1768: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+tests/test_auth_and_access.py: 2 warnings
+tests/test_social_and_moderation.py: 12 warnings
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1859: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+tests/test_auth_and_access.py::test_private_video_access_control_and_grant_flow
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1966: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 4 passed, 23 warnings in 8.27s ========================

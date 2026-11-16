@@ -1,0 +1,23 @@
+Command exited with code 0.
+
+Command output:
+ Container youtubetask-minio-1 Running 
+ Container youtubetask-backend-1 Running 
+ Container youtubetask-postgres-1 Running 
+ Container youtubetask-redis-1 Running 
+ Container youtubetask-nginx-1 Recreate 
+ Container youtubetask-nginx-1 Recreated 
+ Container youtubetask-minio-1 Waiting 
+ Container youtubetask-minio-1 Healthy 
+ Container youtubetask-minio-init-1 Starting 
+ Container youtubetask-minio-init-1 Started 
+ Container youtubetask-postgres-1 Waiting 
+ Container youtubetask-redis-1 Waiting 
+ Container youtubetask-minio-init-1 Waiting 
+ Container youtubetask-redis-1 Healthy 
+ Container youtubetask-postgres-1 Healthy 
+ Container youtubetask-minio-init-1 Exited 
+ Container youtubetask-backend-1 Waiting 
+ Container youtubetask-backend-1 Healthy 
+ Container youtubetask-nginx-1 Starting 
+ Container youtubetask-nginx-1 Started 

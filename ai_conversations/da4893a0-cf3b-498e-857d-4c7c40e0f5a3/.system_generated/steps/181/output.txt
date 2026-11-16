@@ -1,0 +1,6 @@
+Created At: 2026-11-12T19:05:55+03:00
+Completed At: 2026-11-12T19:05:56+03:00
+Command exited with code 1.
+
+Command output:
+Error response from daemon: Container a2be880afdf005e6e42fef6cb2716c2f55574603e393cfb89e143646d602eaa4 is restarting, wait until the container is running

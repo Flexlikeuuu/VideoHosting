@@ -1,0 +1,12 @@
+Created At: 2026-11-15T20:56:52+03:00
+Completed At: 2026-11-15T20:56:54+03:00
+Command exited with code 0.
+
+Command output:
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS                            PORTS                                 NAMES
+a3250105ae8a   nginx:1.27-alpine     "/docker-entrypoint.…"   33 seconds ago   Up 9 seconds (health: starting)   0.0.0.0:80->80/tcp, [::]:80->80/tcp   youtubetask-nginx-1
+4d8a3c898f07   youtubetask-backend   "/app/entrypoint.sh …"   34 seconds ago   Up 21 seconds (healthy)           8000/tcp                              youtubetask-backend-1
+8411138bb960   youtubetask-worker    "/app/entrypoint.sh …"   34 seconds ago   Up 21 seconds (healthy)           8000/tcp                              youtubetask-worker-1
+53975b3995b4   postgres:16-alpine    "docker-entrypoint.s…"   35 seconds ago   Up 31 seconds (healthy)           5432/tcp                              youtubetask-postgres-1
+cf954722ceab   redis:7-alpine        "docker-entrypoint.s…"   35 seconds ago   Up 32 seconds (healthy)           6379/tcp                              youtubetask-redis-1
+fa9c10ba3313   pgsty/silo:latest     "/usr/bin/docker-ent…"   3 days ago       Up 31 seconds (healthy)           9000/tcp                              youtubetask-minio-1

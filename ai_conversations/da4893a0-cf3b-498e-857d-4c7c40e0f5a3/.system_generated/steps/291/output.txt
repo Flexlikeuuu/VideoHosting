@@ -1,0 +1,35 @@
+Created At: 2026-11-15T20:30:52+03:00
+Completed At: 2026-11-15T20:30:54+03:00
+Command exited with code 0.
+
+Command output:
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 39, in sender
+backend-1  |     await send(message)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/middleware/cors.py", line 172, in send
+backend-1  |     await send(message)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/starlette/middleware/errors.py", line 161, in _send
+backend-1  |     await send(message)
+backend-1  |   File "/usr/local/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 492, in send
+backend-1  |     content = [STATUS_LINE[status_code]]
+backend-1  |                ~~~~~~~~~~~^^^^^^^^^^^^^
+backend-1  | KeyError: None
+backend-1  | 2026-11-15 17:30:42,054 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-15 17:30:42,055 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-15 17:30:42,055 INFO sqlalchemy.engine.Engine [cached since 192.6s ago] ()
+backend-1  | 2026-11-15 17:30:42,057 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     127.0.0.1:52240 - "GET /api/v1/health HTTP/1.1" 200 OK
+backend-1  | 2026-11-15 17:30:42,810 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-15 17:30:42,810 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-15 17:30:42,811 INFO sqlalchemy.engine.Engine [cached since 193.3s ago] ()
+backend-1  | 2026-11-15 17:30:42,813 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     172.20.0.7:44776 - "GET /api/v1/health HTTP/1.1" 200 OK
+backend-1  | 2026-11-15 17:30:52,156 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-15 17:30:52,156 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-15 17:30:52,156 INFO sqlalchemy.engine.Engine [cached since 202.7s ago] ()
+backend-1  | 2026-11-15 17:30:52,158 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     127.0.0.1:54920 - "GET /api/v1/health HTTP/1.1" 200 OK
+backend-1  | 2026-11-15 17:30:52,919 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+backend-1  | 2026-11-15 17:30:52,919 INFO sqlalchemy.engine.Engine SELECT 1
+backend-1  | 2026-11-15 17:30:52,920 INFO sqlalchemy.engine.Engine [cached since 203.4s ago] ()
+backend-1  | 2026-11-15 17:30:52,922 INFO sqlalchemy.engine.Engine ROLLBACK
+backend-1  | INFO:     172.20.0.7:32890 - "GET /api/v1/health HTTP/1.1" 200 OK

@@ -1,0 +1,21 @@
+Command exited with code 0.
+
+Command output:
+Invoke-WebRequest : Невозможно соединиться с удаленным сервером
+At line:1 char:128
++ ... h {}; $r1 = Invoke-WebRequest -Uri "http://localhost/" -UseBasicParsi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebExc 
+   eption
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+ 
+Root:  Len: 0
+Invoke-WebRequest : Невозможно соединиться с удаленным сервером
+At line:1 char:262
++ ... th)"; $r2 = Invoke-WebRequest -Uri "http://localhost/watch/some-video ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebExc 
+   eption
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+ 
+Watch SPA:  Len: 0

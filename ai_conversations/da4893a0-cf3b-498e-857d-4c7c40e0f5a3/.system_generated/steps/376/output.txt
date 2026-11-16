@@ -1,0 +1,19 @@
+Created At: 2026-11-15T20:38:39+03:00
+Completed At: 2026-11-15T20:38:49+03:00
+Command exited with code 0.
+
+Command output:
+ youtubetask-backend-1 Copying backend/app/repositories/social.py to youtubetask-backend-1:/app/app/repositories/social.py
+ youtubetask-backend-1 Copied backend/app/repositories/social.py to youtubetask-backend-1:/app/app/repositories/social.py
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/local/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /app
+configfile: pytest.ini
+plugins: asyncio-0.26.0, anyio-4.16.0
+asyncio: mode=Mode.AUTO, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_social_and_moderation.py::test_social_features_and_moderation_flow PASSED [100%]
+
+============================== 1 passed in 4.77s ===============================

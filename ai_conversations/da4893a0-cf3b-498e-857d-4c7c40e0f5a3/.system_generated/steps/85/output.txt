@@ -1,0 +1,14 @@
+Created At: 2026-11-12T18:16:01+03:00
+Completed At: 2026-11-12T18:16:09+03:00
+Command exited with code 0.
+
+Command output:
+Python 3.14.3
+?? .env.example
+?? .gitignore
+?? Makefile
+?? "TZ-YouTube-kopiya (1).docx"
+?? backend/
+?? deploy.sh
+?? docker-compose.yml
+?? nginx/

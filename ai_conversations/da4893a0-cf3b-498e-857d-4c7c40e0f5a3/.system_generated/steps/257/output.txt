@@ -1,0 +1,8 @@
+Created At: 2026-11-15T20:28:12+03:00
+Completed At: 2026-11-15T20:28:17+03:00
+Command exited with code 1.
+
+Command output:
+NAME                  IMAGE               COMMAND                  SERVICE   CREATED      STATUS                            PORTS
+youtubetask-nginx-1   nginx:1.27-alpine   "/docker-entrypoint.…"   nginx     3 days ago   Up 2 seconds (health: starting)   80/tcp
+curl: (7) Failed to connect to localhost:80 after 2 ms: Could not connect to server

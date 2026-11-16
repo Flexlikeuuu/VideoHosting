@@ -1,0 +1,253 @@
+Command exited with code 1.
+
+Command output:
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/local/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /app
+configfile: pytest.ini
+plugins: asyncio-0.26.0, anyio-4.16.0
+asyncio: mode=Mode.AUTO, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 4 items
+
+tests/test_e2e_and_security.py::test_security_upload_validation_magic_bytes PASSED [ 25%]
+tests/test_e2e_and_security.py::test_security_moderation_rbac_forbidden_for_regular_user PASSED [ 50%]
+tests/test_e2e_and_security.py::test_security_private_video_access_control_and_revocation PASSED [ 75%]
+tests/test_e2e_and_security.py::test_e2e_primary_journey FAILED          [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_e2e_primary_journey ___________________________
+
+client = <httpx.AsyncClient object at 0x7de17a6b1e20>
+
+    @pytest.mark.asyncio
+    async def test_e2e_primary_journey(client: AsyncClient):
+        """
+        Full End-to-End Test of Primary Happy Path:
+        1. Register new user.
+        2. Upload real MP4 video generated with FFmpeg.
+        3. Run background transcode worker task -> status 'ready'.
+        4. Access video stream endpoint (X-Accel-Redirect header with Presigned URL).
+        5. Second user registers and likes the video -> verify likes count is 1.
+        6. Second user adds a comment -> verify comments list.
+        7. Register view -> verify views count.
+        """
+        suffix = uuid.uuid4().hex[:6]
+        creator_name = f"e2e_creator_{suffix}"
+    
+        # 1. Register creator
+        reg_resp = await client.post(
+            "/api/v1/auth/register",
+            json={
+                "email": f"{creator_name}@example.com",
+                "username": creator_name,
+                "password": "Password123!",
+                "channel_name": "E2E Channel",
+            },
+        )
+        assert reg_resp.status_code == 201
+        creator_cookies = dict(reg_resp.cookies)
+    
+        # 2. Generate and upload a real MP4 video
+        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tf:
+            mp4_path = tf.name
+    
+        try:
+            generate_tiny_test_mp4(mp4_path, duration=2)
+    
+            with open(mp4_path, "rb") as vf:
+                upload_resp = await client.post(
+                    "/api/v1/videos/upload",
+                    data={
+                        "title": "E2E Masterpiece",
+                        "description": "Full end-to-end integration test video",
+                        "visibility": "public",
+                    },
+                    files={"video": ("test_clip.mp4", vf, "video/mp4")},
+                )
+            assert upload_resp.status_code == 201
+            video_data = upload_resp.json()
+            video_id = video_data["id"]
+            assert video_data["status"] in ("uploading", "processing")
+    
+            # 3. Process video via Arq worker function
+            worker_ctx = {}
+            await process_video(worker_ctx, str(video_id))
+    
+            # Verify status is now 'ready'
+            status_resp = await client.get(f"/api/v1/videos/{video_id}")
+            assert status_resp.status_code == 200
+            assert status_resp.json()["status"] == "ready"
+            assert status_resp.json()["duration_seconds"] is not None
+            assert status_resp.json()["thumbnail_object_key"] is not None
+    
+            # 4. Stream endpoint provides X-Accel-Redirect to Nginx for internal S3 streaming
+            stream_resp = await client.get(f"/api/v1/videos/{video_id}/stream")
+            assert stream_resp.status_code == 200
+            assert "X-Accel-Redirect" in stream_resp.headers
+>           assert "Accept-Ranges" in stream_resp.headers
+E           AssertionError: assert 'Accept-Ranges' in Headers({'x-accel-redirect': '/_internal_s3/videos/processed/a89f7dea-104e-4ae7-bad4-b00892f3f111.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=minioadmin%2F20261116%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261116T074752Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=5b45f2f4192cb353e3a504b7aada038013bba52a0138d71f069e85cb6e84f13e', 'content-type': 'video/mp4', 'content-length': '0', 'vary': 'Origin'})
+E            +  where Headers({'x-accel-redirect': '/_internal_s3/videos/processed/a89f7dea-104e-4ae7-bad4-b00892f3f111.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=minioadmin%2F20261116%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261116T074752Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=5b45f2f4192cb353e3a504b7aada038013bba52a0138d71f069e85cb6e84f13e', 'content-type': 'video/mp4', 'content-length': '0', 'vary': 'Origin'}) = <Response [200 OK]>.headers
+
+tests/test_e2e_and_security.py:304: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-16 07:47:51,295 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:51,295 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2026-11-16 07:47:51,296 INFO sqlalchemy.engine.Engine [cached since 1.177s ago] ('e2e_creator_d029ca@example.com',)
+2026-11-16 07:47:51,304 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2026-11-16 07:47:51,304 INFO sqlalchemy.engine.Engine [cached since 1.175s ago] ('e2e_creator_d029ca',)
+2026-11-16 07:47:51,391 INFO sqlalchemy.engine.Engine INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN) RETURNING users.created_at, users.updated_at
+2026-11-16 07:47:51,391 INFO sqlalchemy.engine.Engine [cached since 1.162s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'), 'e2e_creator_d029ca@example.com', 'e2e_creator_d029ca', '$argon2id$v=19$m=65536,t=3,p=4$UB3PcgxPpnf2DIYzwQvefw$xaRidfO0rqBz+ogWK3op/dS6lbPmdpDheDk4vZL4T0Y', <UserRole.USER: 'user'>, 'E2E Channel', None, None, True)
+2026-11-16 07:47:51,393 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-16 07:47:51,409 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:51,409 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-16 07:47:51,410 INFO sqlalchemy.engine.Engine [cached since 1.16s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:51,415 INFO sqlalchemy.engine.Engine INSERT INTO refresh_tokens (id, user_id, token_hash, expires_at, revoked_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::TIMESTAMP WITH TIME ZONE, $5::TIMESTAMP WITH TIME ZONE) RETURNING refresh_tokens.created_at
+2026-11-16 07:47:51,415 INFO sqlalchemy.engine.Engine [cached since 1.158s ago] (UUID('1a8a63a8-45ba-4ded-9306-e776dbc4fcf5'), UUID('61b65135-8220-4e42-9034-708badbb3f9e'), '54d863799f050d37db81a65c36bd9dd7a63077cebb35ef1ec144b27d9c50d384', datetime.datetime(2026, 11, 23, 7, 47, 51, 415258, tzinfo=datetime.timezone.utc), None)
+2026-11-16 07:47:51,419 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-16 07:47:51,631 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:51,632 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-16 07:47:51,632 INFO sqlalchemy.engine.Engine [cached since 1.306s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:52,059 INFO sqlalchemy.engine.Engine INSERT INTO videos (id, owner_id, title, description, status, visibility, is_hidden, hidden_reason, duration_seconds, views_count, likes_count, dislikes_count, raw_object_key, processed_object_key, thumbnail_object_key, error_message) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::BOOLEAN, $8::VARCHAR, $9::INTEGER, $10::BIGINT, $11::INTEGER, $12::INTEGER, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR) RETURNING videos.created_at, videos.updated_at
+2026-11-16 07:47:52,059 INFO sqlalchemy.engine.Engine [cached since 1.06s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'), UUID('61b65135-8220-4e42-9034-708badbb3f9e'), 'E2E Masterpiece', 'Full end-to-end integration test video', <VideoStatus.PROCESSING: 'processing'>, <VideoVisibility.PUBLIC: 'public'>, False, None, None, 0, 0, 0, 'raw/a89f7dea-104e-4ae7-bad4-b00892f3f111.bin', None, None, None)
+2026-11-16 07:47:52,065 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-16 07:47:52,082 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:52,084 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-16 07:47:52,085 INFO sqlalchemy.engine.Engine [generated in 0.00038s] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+2026-11-16 07:47:52,100 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-11-16 07:47:52,121 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:52,123 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-16 07:47:52,123 INFO sqlalchemy.engine.Engine [generated in 0.00032s] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+2026-11-16 07:47:52,131 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-11-16 07:47:52,799 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:52,800 INFO sqlalchemy.engine.Engine UPDATE videos SET status=$1::VARCHAR, duration_seconds=$2::INTEGER, processed_object_key=$3::VARCHAR, thumbnail_object_key=$4::VARCHAR, error_message=$5::VARCHAR, updated_at=now() WHERE videos.id = $6::UUID
+2026-11-16 07:47:52,800 INFO sqlalchemy.engine.Engine [generated in 0.00035s] (<VideoStatus.READY: 'ready'>, 2, 'processed/a89f7dea-104e-4ae7-bad4-b00892f3f111.mp4', 'thumbnails/a89f7dea-104e-4ae7-bad4-b00892f3f111.jpg', None, UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'))
+2026-11-16 07:47:52,808 INFO sqlalchemy.engine.Engine COMMIT
+2026-11-16 07:47:52,839 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:52,839 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-16 07:47:52,840 INFO sqlalchemy.engine.Engine [cached since 2.513s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:52,850 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-16 07:47:52,850 INFO sqlalchemy.engine.Engine [cached since 1.809s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+2026-11-16 07:47:52,857 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-11-16 07:47:52,857 INFO sqlalchemy.engine.Engine [cached since 1.809s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:52,860 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-11-16 07:47:52,893 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:47:52,894 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-11-16 07:47:52,895 INFO sqlalchemy.engine.Engine [cached since 2.568s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:52,905 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+2026-11-16 07:47:52,905 INFO sqlalchemy.engine.Engine [cached since 1.863s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+2026-11-16 07:47:52,912 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-11-16 07:47:52,912 INFO sqlalchemy.engine.Engine [cached since 1.865s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+2026-11-16 07:47:52,922 INFO sqlalchemy.engine.Engine ROLLBACK
+------------------------------ Captured log call -------------------------------
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.177s ago] ('e2e_creator_d029ca@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.175s ago] ('e2e_creator_d029ca',)
+INFO     sqlalchemy.engine.Engine:base.py:1868 INSERT INTO users (id, email, username, password_hash, role, channel_name, channel_description, avatar_key, is_active) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN) RETURNING users.created_at, users.updated_at
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.162s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'), 'e2e_creator_d029ca@example.com', 'e2e_creator_d029ca', '$argon2id$v=19$m=65536,t=3,p=4$UB3PcgxPpnf2DIYzwQvefw$xaRidfO0rqBz+ogWK3op/dS6lbPmdpDheDk4vZL4T0Y', <UserRole.USER: 'user'>, 'E2E Channel', None, None, True)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.16s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 INSERT INTO refresh_tokens (id, user_id, token_hash, expires_at, revoked_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::TIMESTAMP WITH TIME ZONE, $5::TIMESTAMP WITH TIME ZONE) RETURNING refresh_tokens.created_at
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.158s ago] (UUID('1a8a63a8-45ba-4ded-9306-e776dbc4fcf5'), UUID('61b65135-8220-4e42-9034-708badbb3f9e'), '54d863799f050d37db81a65c36bd9dd7a63077cebb35ef1ec144b27d9c50d384', datetime.datetime(2026, 11, 23, 7, 47, 51, 415258, tzinfo=datetime.timezone.utc), None)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.306s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 INSERT INTO videos (id, owner_id, title, description, status, visibility, is_hidden, hidden_reason, duration_seconds, views_count, likes_count, dislikes_count, raw_object_key, processed_object_key, thumbnail_object_key, error_message) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::BOOLEAN, $8::VARCHAR, $9::INTEGER, $10::BIGINT, $11::INTEGER, $12::INTEGER, $13::VARCHAR, $14::VARCHAR, $15::VARCHAR, $16::VARCHAR) RETURNING videos.created_at, videos.updated_at
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.06s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'), UUID('61b65135-8220-4e42-9034-708badbb3f9e'), 'E2E Masterpiece', 'Full end-to-end integration test video', <VideoStatus.PROCESSING: 'processing'>, <VideoVisibility.PUBLIC: 'public'>, False, None, None, 0, 0, 0, 'raw/a89f7dea-104e-4ae7-bad4-b00892f3f111.bin', None, None, None)
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00038s] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00032s] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 UPDATE videos SET status=$1::VARCHAR, duration_seconds=$2::INTEGER, processed_object_key=$3::VARCHAR, thumbnail_object_key=$4::VARCHAR, error_message=$5::VARCHAR, updated_at=now() WHERE videos.id = $6::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [generated in 0.00035s] (<VideoStatus.READY: 'ready'>, 2, 'processed/a89f7dea-104e-4ae7-bad4-b00892f3f111.mp4', 'thumbnails/a89f7dea-104e-4ae7-bad4-b00892f3f111.jpg', None, UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'))
+INFO     sqlalchemy.engine.Engine:base.py:2704 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 2.513s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.809s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.809s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+INFO     sqlalchemy.engine.Engine:base.py:2698 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 2.568s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.863s ago] (UUID('a89f7dea-104e-4ae7-bad4-b00892f3f111'),)
+INFO     sqlalchemy.engine.Engine:base.py:1868 SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+INFO     sqlalchemy.engine.Engine:base.py:1927 [cached since 1.865s ago] (UUID('61b65135-8220-4e42-9034-708badbb3f9e'),)
+INFO     sqlalchemy.engine.Engine:base.py:2701 ROLLBACK
+=============================== warnings summary ===============================
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+  /usr/local/lib/python3.12/site-packages/botocore/auth.py:425: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    datetime_now = datetime.datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_e2e_and_security.py::test_e2e_primary_journey - AssertionEr...
+=================== 1 failed, 3 passed, 7 warnings in 7.68s ====================

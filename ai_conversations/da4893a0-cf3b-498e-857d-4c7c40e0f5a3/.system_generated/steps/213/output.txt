@@ -1,0 +1,14 @@
+Created At: 2026-11-15T20:24:21+03:00
+Completed At: 2026-11-15T20:24:26+03:00
+Command exited with code 0.
+
+Command output:
+.                                                                        [100%]
+=============================== warnings summary ===============================
+tests/test_auth_and_access.py::test_rbac_protection
+tests/test_auth_and_access.py::test_rbac_protection
+  /usr/local/lib/python3.12/site-packages/httpx/_client.py:1768: DeprecationWarning: Setting per-request cookies=<...> is being deprecated, because the expected behaviour on cookie persistence is ambiguous. Set cookies directly on the client instance instead.
+    return await self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 2 deselected, 2 warnings in 2.15s

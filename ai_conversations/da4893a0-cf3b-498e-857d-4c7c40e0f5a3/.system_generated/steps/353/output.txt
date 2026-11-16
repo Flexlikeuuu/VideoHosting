@@ -1,0 +1,8 @@
+Created At: 2026-11-15T20:36:23+03:00
+Completed At: 2026-11-15T20:36:25+03:00
+Command exited with code 0.
+
+Command output:
+OpenAPI Title: YouTube Clone MVP
+Tags found: ['Health', 'Channels', 'Playlists', 'Moderation', 'Comments', 'Auth', 'Videos']
+Total endpoints count: 31

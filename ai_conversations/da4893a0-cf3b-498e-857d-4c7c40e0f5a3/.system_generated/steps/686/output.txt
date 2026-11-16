@@ -1,0 +1,156 @@
+Created At: 2026-11-16T10:44:00+03:00
+Completed At: 2026-11-16T10:44:04+03:00
+Command exited with code 0.
+
+Command output:
+==================================================
+🚀 Starting YouTube Clone Database & S3 Seeding...
+==================================================
+
+[Step 1/6] Seeding Users...
+2026-11-16 07:44:03,961 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2026-11-16 07:44:03,962 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-16 07:44:03,966 INFO sqlalchemy.engine.Engine select current_schema()
+2026-11-16 07:44:03,966 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-16 07:44:03,970 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2026-11-16 07:44:03,970 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-16 07:44:03,973 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:44:04,017 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2026-11-16 07:44:04,017 INFO sqlalchemy.engine.Engine [generated in 0.00042s] ('admin',)
+2026-11-16 07:44:04,031 INFO sqlalchemy.engine.Engine UPDATE users SET email=$1::VARCHAR, password_hash=$2::VARCHAR, updated_at=now() WHERE users.id = $3::UUID
+2026-11-16 07:44:04,031 INFO sqlalchemy.engine.Engine [generated in 0.00031s] ('admin@example.com', '$argon2id$v=19$m=65536,t=3,p=4$EPPP8VSIj5zEQ3yXwCg3hg$QcCpVezJHhCMNCEwfP90VZKRG77Y4GeTwlPTf7rmNuM', UUID('3dd2c204-3b35-49f4-b05e-500466495a2b'))
+  [=] Updated user: admin (role=admin)
+2026-11-16 07:44:04,036 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2026-11-16 07:44:04,036 INFO sqlalchemy.engine.Engine [cached since 0.01964s ago] ('moderator',)
+2026-11-16 07:44:04,038 INFO sqlalchemy.engine.Engine UPDATE users SET email=$1::VARCHAR, password_hash=$2::VARCHAR, updated_at=now() WHERE users.id = $3::UUID
+2026-11-16 07:44:04,038 INFO sqlalchemy.engine.Engine [cached since 0.007232s ago] ('moderator@example.com', '$argon2id$v=19$m=65536,t=3,p=4$EPPP8VSIj5zEQ3yXwCg3hg$QcCpVezJHhCMNCEwfP90VZKRG77Y4GeTwlPTf7rmNuM', UUID('56f586e3-4e34-4dd0-9625-a59567445027'))
+  [=] Updated user: moderator (role=moderator)
+2026-11-16 07:44:04,041 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2026-11-16 07:44:04,041 INFO sqlalchemy.engine.Engine [cached since 0.02471s ago] ('creator',)
+2026-11-16 07:44:04,043 INFO sqlalchemy.engine.Engine UPDATE users SET email=$1::VARCHAR, password_hash=$2::VARCHAR, updated_at=now() WHERE users.id = $3::UUID
+2026-11-16 07:44:04,043 INFO sqlalchemy.engine.Engine [cached since 0.01191s ago] ('creator@example.com', '$argon2id$v=19$m=65536,t=3,p=4$EPPP8VSIj5zEQ3yXwCg3hg$QcCpVezJHhCMNCEwfP90VZKRG77Y4GeTwlPTf7rmNuM', UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'))
+  [=] Updated user: creator (role=user)
+2026-11-16 07:44:04,045 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.password_hash, users.role, users.channel_name, users.channel_description, users.avatar_key, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2026-11-16 07:44:04,046 INFO sqlalchemy.engine.Engine [cached since 0.02944s ago] ('viewer',)
+2026-11-16 07:44:04,048 INFO sqlalchemy.engine.Engine UPDATE users SET email=$1::VARCHAR, password_hash=$2::VARCHAR, updated_at=now() WHERE users.id = $3::UUID
+2026-11-16 07:44:04,048 INFO sqlalchemy.engine.Engine [cached since 0.01694s ago] ('viewer@example.com', '$argon2id$v=19$m=65536,t=3,p=4$EPPP8VSIj5zEQ3yXwCg3hg$QcCpVezJHhCMNCEwfP90VZKRG77Y4GeTwlPTf7rmNuM', UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+  [=] Updated user: viewer (role=user)
+2026-11-16 07:44:04,049 INFO sqlalchemy.engine.Engine COMMIT
+
+[Step 2/6] Seeding Subscriptions...
+2026-11-16 07:44:04,069 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:44:04,071 INFO sqlalchemy.engine.Engine SELECT subscriptions.id, subscriptions.subscriber_id, subscriptions.channel_id, subscriptions.created_at 
+FROM subscriptions 
+WHERE subscriptions.subscriber_id = $1::UUID AND subscriptions.channel_id = $2::UUID
+2026-11-16 07:44:04,071 INFO sqlalchemy.engine.Engine [generated in 0.00025s] (UUID('9da1c132-2519-40fa-802c-71d000d5783c'), UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'))
+  [=] Subscription viewer -> creator exists
+
+[Step 3/6] Seeding Videos & Media (FFmpeg + S3)...
+2026-11-16 07:44:04,293 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,293 INFO sqlalchemy.engine.Engine [generated in 0.00030s] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Tech Review: Cloud Architecture 2026')
+  [=] Video 'Tech Review: Cloud Architecture 2026' already exists (ID: dd730518-b0ef-47a8-934d-5fdcac5189cb)
+2026-11-16 07:44:04,303 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,303 INFO sqlalchemy.engine.Engine [cached since 0.009715s ago] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Coding Live: Video Streaming with FastAPI & Nginx')
+  [=] Video 'Coding Live: Video Streaming with FastAPI & Nginx' already exists (ID: 3d66ee6f-8b30-4bd6-bf0c-dc53ef7aca4c)
+2026-11-16 07:44:04,306 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,306 INFO sqlalchemy.engine.Engine [cached since 0.01333s ago] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'DevOps & Docker Compose: Production Ubuntu Deployment')
+  [=] Video 'DevOps & Docker Compose: Production Ubuntu Deployment' already exists (ID: 794d79bd-78a4-452d-913a-e302acdcc770)
+2026-11-16 07:44:04,309 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,309 INFO sqlalchemy.engine.Engine [cached since 0.01639s ago] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Game Highlights & Speedrun World Records')
+  [=] Video 'Game Highlights & Speedrun World Records' already exists (ID: f7903f55-89ca-48aa-900a-c17edc32f163)
+2026-11-16 07:44:04,312 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,313 INFO sqlalchemy.engine.Engine [cached since 0.01943s ago] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Private Vlog: Creator Backstage & Unreleased Footage')
+  [=] Video 'Private Vlog: Creator Backstage & Unreleased Footage' already exists (ID: 1d4dfb8b-3c38-4aff-ae8a-b855108d8b8d)
+2026-11-16 07:44:04,315 INFO sqlalchemy.engine.Engine SELECT videos.id, videos.owner_id, videos.title, videos.description, videos.status, videos.visibility, videos.is_hidden, videos.hidden_reason, videos.duration_seconds, videos.views_count, videos.likes_count, videos.dislikes_count, videos.raw_object_key, videos.processed_object_key, videos.thumbnail_object_key, videos.error_message, videos.created_at, videos.updated_at 
+FROM videos 
+WHERE videos.owner_id = $1::UUID AND videos.title = $2::VARCHAR
+2026-11-16 07:44:04,315 INFO sqlalchemy.engine.Engine [cached since 0.0219s ago] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Controversial Video: Questionable Content')
+  [=] Video 'Controversial Video: Questionable Content' already exists (ID: eca9a301-ecad-4077-b20b-7d49d8e0f57c)
+2026-11-16 07:44:04,317 INFO sqlalchemy.engine.Engine COMMIT
+
+[Step 4/6] Seeding Private Access Grants...
+2026-11-16 07:44:04,336 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:44:04,338 INFO sqlalchemy.engine.Engine SELECT video_access_list.id, video_access_list.video_id, video_access_list.user_id, video_access_list.granted_by, video_access_list.created_at 
+FROM video_access_list 
+WHERE video_access_list.video_id = $1::UUID AND video_access_list.user_id = $2::UUID
+2026-11-16 07:44:04,338 INFO sqlalchemy.engine.Engine [generated in 0.00037s] (UUID('1d4dfb8b-3c38-4aff-ae8a-b855108d8b8d'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+  [=] Access grant for 'viewer' already exists
+
+[Step 5/6] Seeding Social Interactions (Comments & Reactions)...
+2026-11-16 07:44:04,348 INFO sqlalchemy.engine.Engine SELECT comments.id, comments.video_id, comments.author_id, comments.content, comments.is_deleted, comments.created_at, comments.updated_at 
+FROM comments 
+WHERE comments.video_id = $1::UUID AND comments.author_id = $2::UUID AND comments.content = $3::VARCHAR
+2026-11-16 07:44:04,348 INFO sqlalchemy.engine.Engine [generated in 0.00031s] (UUID('dd730518-b0ef-47a8-934d-5fdcac5189cb'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'), 'Отличный обзор архитектуры! Все разложено по полочкам.')
+2026-11-16 07:44:04,356 INFO sqlalchemy.engine.Engine SELECT comments.id, comments.video_id, comments.author_id, comments.content, comments.is_deleted, comments.created_at, comments.updated_at 
+FROM comments 
+WHERE comments.video_id = $1::UUID AND comments.author_id = $2::UUID AND comments.content = $3::VARCHAR
+2026-11-16 07:44:04,356 INFO sqlalchemy.engine.Engine [cached since 0.008365s ago] (UUID('3d66ee6f-8b30-4bd6-bf0c-dc53ef7aca4c'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'), 'Стриминг через Nginx X-Accel-Redirect работает молниеносно!')
+2026-11-16 07:44:04,359 INFO sqlalchemy.engine.Engine SELECT comments.id, comments.video_id, comments.author_id, comments.content, comments.is_deleted, comments.created_at, comments.updated_at 
+FROM comments 
+WHERE comments.video_id = $1::UUID AND comments.author_id = $2::UUID AND comments.content = $3::VARCHAR
+2026-11-16 07:44:04,359 INFO sqlalchemy.engine.Engine [cached since 0.01113s ago] (UUID('794d79bd-78a4-452d-913a-e302acdcc770'), UUID('3dd2c204-3b35-49f4-b05e-500466495a2b'), 'Запуск в Docker Compose проверен. Отличная работа!')
+2026-11-16 07:44:04,361 INFO sqlalchemy.engine.Engine SELECT comments.id, comments.video_id, comments.author_id, comments.content, comments.is_deleted, comments.created_at, comments.updated_at 
+FROM comments 
+WHERE comments.video_id = $1::UUID AND comments.author_id = $2::UUID AND comments.content = $3::VARCHAR
+2026-11-16 07:44:04,361 INFO sqlalchemy.engine.Engine [cached since 0.01323s ago] (UUID('dd730518-b0ef-47a8-934d-5fdcac5189cb'), UUID('3dd2c204-3b35-49f4-b05e-500466495a2b'), 'Отличное качество H.264 и быстрая загрузка превью.')
+2026-11-16 07:44:04,364 INFO sqlalchemy.engine.Engine SELECT video_reactions.id, video_reactions.video_id, video_reactions.user_id, video_reactions.value, video_reactions.created_at 
+FROM video_reactions 
+WHERE video_reactions.video_id = $1::UUID AND video_reactions.user_id = $2::UUID
+2026-11-16 07:44:04,364 INFO sqlalchemy.engine.Engine [generated in 0.00031s] (UUID('dd730518-b0ef-47a8-934d-5fdcac5189cb'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+2026-11-16 07:44:04,369 INFO sqlalchemy.engine.Engine SELECT video_reactions.id, video_reactions.video_id, video_reactions.user_id, video_reactions.value, video_reactions.created_at 
+FROM video_reactions 
+WHERE video_reactions.video_id = $1::UUID AND video_reactions.user_id = $2::UUID
+2026-11-16 07:44:04,369 INFO sqlalchemy.engine.Engine [cached since 0.00559s ago] (UUID('3d66ee6f-8b30-4bd6-bf0c-dc53ef7aca4c'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+2026-11-16 07:44:04,372 INFO sqlalchemy.engine.Engine SELECT video_reactions.id, video_reactions.video_id, video_reactions.user_id, video_reactions.value, video_reactions.created_at 
+FROM video_reactions 
+WHERE video_reactions.video_id = $1::UUID AND video_reactions.user_id = $2::UUID
+2026-11-16 07:44:04,372 INFO sqlalchemy.engine.Engine [cached since 0.008026s ago] (UUID('794d79bd-78a4-452d-913a-e302acdcc770'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+2026-11-16 07:44:04,374 INFO sqlalchemy.engine.Engine SELECT video_reactions.id, video_reactions.video_id, video_reactions.user_id, video_reactions.value, video_reactions.created_at 
+FROM video_reactions 
+WHERE video_reactions.video_id = $1::UUID AND video_reactions.user_id = $2::UUID
+2026-11-16 07:44:04,374 INFO sqlalchemy.engine.Engine [cached since 0.01055s ago] (UUID('eca9a301-ecad-4077-b20b-7d49d8e0f57c'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'))
+2026-11-16 07:44:04,376 INFO sqlalchemy.engine.Engine COMMIT
+
+[Step 6/6] Seeding Playlist & Moderation Reports...
+2026-11-16 07:44:04,393 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-16 07:44:04,395 INFO sqlalchemy.engine.Engine SELECT playlists.id, playlists.owner_id, playlists.title, playlists.description, playlists.is_public, playlists.created_at, playlists.updated_at 
+FROM playlists 
+WHERE playlists.owner_id = $1::UUID AND playlists.title = $2::VARCHAR
+2026-11-16 07:44:04,396 INFO sqlalchemy.engine.Engine [generated in 0.00031s] (UUID('8574d6f1-8a60-4d74-9d5a-454ead4c8bd9'), 'Курс: Fullstack & DevOps с нуля')
+  [=] Playlist 'Курс: Fullstack & DevOps с нуля' already exists
+2026-11-16 07:44:04,407 INFO sqlalchemy.engine.Engine SELECT reports.id, reports.video_id, reports.reporter_id, reports.reason, reports.status, reports.moderator_id, reports.moderator_comment, reports.created_at, reports.resolved_at 
+FROM reports 
+WHERE reports.video_id = $1::UUID AND reports.reporter_id = $2::UUID AND reports.reason = $3::VARCHAR
+2026-11-16 07:44:04,407 INFO sqlalchemy.engine.Engine [generated in 0.00031s] (UUID('eca9a301-ecad-4077-b20b-7d49d8e0f57c'), UUID('9da1c132-2519-40fa-802c-71d000d5783c'), 'Спам, кликбейт и вводящее в заблуждение описание видео.')
+2026-11-16 07:44:04,415 INFO sqlalchemy.engine.Engine SELECT reports.id, reports.video_id, reports.reporter_id, reports.reason, reports.status, reports.moderator_id, reports.moderator_comment, reports.created_at, reports.resolved_at 
+FROM reports 
+WHERE reports.video_id = $1::UUID AND reports.reporter_id = $2::UUID AND reports.reason = $3::VARCHAR
+2026-11-16 07:44:04,415 INFO sqlalchemy.engine.Engine [cached since 0.00789s ago] (UUID('eca9a301-ecad-4077-b20b-7d49d8e0f57c'), UUID('3dd2c204-3b35-49f4-b05e-500466495a2b'), 'Подозрительное содержание, требуется экспертная проверка модератором.')
+2026-11-16 07:44:04,417 INFO sqlalchemy.engine.Engine COMMIT
+
+==================================================
+✅ Seeding completed successfully!
+🔑 Test credentials: password is 'Password123!' for all accounts:
+   - admin@youtube.local / admin (Role: ADMIN)
+   - moderator@youtube.local / moderator (Role: MODERATOR)
+   - creator@youtube.local / creator (Role: USER / Content Author)
+   - viewer@youtube.local / viewer (Role: USER / Regular Viewer)
+==================================================

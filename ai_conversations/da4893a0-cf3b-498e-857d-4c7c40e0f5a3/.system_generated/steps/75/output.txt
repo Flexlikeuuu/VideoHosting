@@ -1,0 +1,15 @@
+Created At: 2026-11-12T18:15:02+03:00
+Completed At: 2026-11-12T18:15:06+03:00
+Command exited with code 1.
+
+Command output:
+
+docker : failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is 
+correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file 
+specified.
+At line:1 char:122
++ ... utEncoding } catch {}; docker info --format "{{.ServerVersion}}" 2>&1
++                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (failed to conne...file specified.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

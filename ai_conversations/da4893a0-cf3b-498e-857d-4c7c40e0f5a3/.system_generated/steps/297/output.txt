@@ -1,0 +1,15 @@
+Created At: 2026-11-15T20:31:22+03:00
+Completed At: 2026-11-15T20:31:24+03:00
+Command exited with code 0.
+
+Command output:
+nginx-1  | 127.0.0.1 - - [15/Nov/2026:17:30:52 +0000] "GET /api/v1/health HTTP/1.1" 200 145 "-" "Wget"
+nginx-1  | 127.0.0.1 - - [15/Nov/2026:17:31:03 +0000] "GET /api/v1/health HTTP/1.1" 200 145 "-" "Wget"
+nginx-1  | 127.0.0.1 - - [15/Nov/2026:17:31:13 +0000] "GET /api/v1/health HTTP/1.1" 200 145 "-" "Wget"
+nginx-1  | 172.20.0.3 - - [15/Nov/2026:17:31:16 +0000] "POST /api/v1/auth/register HTTP/1.1" 201 529 "-" "python-httpx/0.28.1"
+nginx-1  | 172.20.0.3 - - [15/Nov/2026:17:31:16 +0000] "POST /api/v1/videos/upload HTTP/1.1" 201 603 "-" "python-httpx/0.28.1"
+nginx-1  | 172.20.0.3 - - [15/Nov/2026:17:31:17 +0000] "GET /api/v1/videos/1f003c79-b1ff-4e70-86f9-faf34d195e1b HTTP/1.1" 200 603 "-" "python-httpx/0.28.1"
+nginx-1  | 172.20.0.3 - - [15/Nov/2026:17:31:18 +0000] "GET /api/v1/videos/1f003c79-b1ff-4e70-86f9-faf34d195e1b HTTP/1.1" 200 644 "-" "python-httpx/0.28.1"
+nginx-1  | 2026/11/15 17:31:18 [error] 30#30: *33 upstream prematurely closed connection while reading response header from upstream, client: 172.20.0.3, server: _, request: "GET /api/v1/videos/1f003c79-b1ff-4e70-86f9-faf34d195e1b/stream HTTP/1.1", upstream: "http://172.20.0.3:8000/api/v1/videos/1f003c79-b1ff-4e70-86f9-faf34d195e1b/stream", host: "nginx"
+nginx-1  | 172.20.0.3 - - [15/Nov/2026:17:31:18 +0000] "GET /api/v1/videos/1f003c79-b1ff-4e70-86f9-faf34d195e1b/stream HTTP/1.1" 502 157 "-" "python-httpx/0.28.1"
+nginx-1  | 127.0.0.1 - - [15/Nov/2026:17:31:23 +0000] "GET /api/v1/health HTTP/1.1" 200 145 "-" "Wget"

@@ -1,0 +1,109 @@
+Command exited with code 0.
+
+Command output:
+ Image youtubetask-backend Building 
+ Image youtubetask-worker Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.74kB 0.1s done
+#1 DONE 0.1s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 574B 0.0s done
+#2 DONE 0.0s
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [worker internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 1.4s
+
+#5 [worker internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [backend 1/7] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#6 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#6 DONE 0.0s
+
+#7 [worker internal] load build context
+#7 transferring context: 37.04kB 0.0s done
+#7 transferring context: 37.04kB 0.0s done
+#7 DONE 0.0s
+
+#8 [backend 2/7] RUN apt-get update && apt-get install -y --no-install-recommends     ffmpeg     curl     && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [backend 3/7] WORKDIR /app
+#9 CACHED
+
+#10 [backend 4/7] COPY requirements.txt .
+#10 CACHED
+
+#11 [backend 5/7] RUN pip install --upgrade pip && pip install -r requirements.txt
+#11 CACHED
+
+#12 [worker 6/7] COPY . .
+#12 DONE 0.1s
+
+#13 [worker 7/7] RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+#13 DONE 0.3s
+
+#13 [backend 7/7] RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+#13 DONE 0.3s
+
+#14 [backend] exporting to image
+#14 exporting layers
+#14 exporting layers 0.2s done
+#14 exporting manifest sha256:709938ca0a2e85b29c684f743d45bc465fca2c85b94bca4474dc2f6ba97d9315 0.0s done
+#14 exporting config sha256:c508d40e13d4466eb11acba53bf96c3ab02b1f420ffb5a2d08eec78c24886a93 0.0s done
+#14 exporting attestation manifest sha256:e5f9a98d668192d07fadbc4fff2be36731c0bbf385ecd7d6bbfc3b3a13db66d0 0.0s done
+#14 exporting manifest list sha256:57cd831867767ed75edb697f2a671e5217565230b0515580afcb21913cb4968f 0.0s done
+#14 naming to docker.io/library/youtubetask-backend:latest done
+#14 unpacking to docker.io/library/youtubetask-backend:latest
+#14 unpacking to docker.io/library/youtubetask-backend:latest 0.1s done
+#14 DONE 0.5s
+
+#15 [worker] exporting to image
+#15 exporting layers 0.2s done
+#15 exporting manifest sha256:fe1930b7af4c01bbad395a3238046b3f425e511e332cd0a95e2045c6fbff5b65 0.0s done
+#15 exporting config sha256:c2cfe6869c54def1261754d28a2a787bc4b1c73029be5a525bfe90aa409351e8 0.0s done
+#15 exporting attestation manifest sha256:de8397adb0d2dd0736a5e1ff3a884aa44e42a7fd8c2a8a1828f03ffcc6e81664 0.0s done
+#15 exporting manifest list sha256:e4a2dcdf8f5db16eb1c55dc1f16620499ea7f0a4f18a5b7e7c3d3c6b1f23185b 0.0s done
+#15 naming to docker.io/library/youtubetask-worker:latest done
+#15 unpacking to docker.io/library/youtubetask-worker:latest 0.1s done
+#15 DONE 0.5s
+
+#16 [worker] resolving provenance for metadata file
+#16 DONE 0.0s
+
+#17 [backend] resolving provenance for metadata file
+#17 DONE 0.0s
+ Image youtubetask-worker Built 
+ Image youtubetask-backend Built 
+ Container youtubetask-postgres-1 Running 
+ Container youtubetask-redis-1 Running 
+ Container youtubetask-minio-1 Running 
+ Container youtubetask-backend-1 Recreate 
+ Container youtubetask-worker-1 Recreate 
+ Container youtubetask-worker-1 Recreated 
+ Container youtubetask-backend-1 Recreated 
+ Container youtubetask-minio-1 Waiting 
+ Container youtubetask-minio-1 Healthy 
+ Container youtubetask-minio-init-1 Starting 
+ Container youtubetask-minio-init-1 Started 
+ Container youtubetask-minio-init-1 Waiting 
+ Container youtubetask-postgres-1 Waiting 
+ Container youtubetask-redis-1 Waiting 
+ Container youtubetask-minio-init-1 Waiting 
+ Container youtubetask-postgres-1 Waiting 
+ Container youtubetask-redis-1 Waiting 
+ Container youtubetask-postgres-1 Healthy 
+ Container youtubetask-redis-1 Healthy 
+ Container youtubetask-postgres-1 Healthy 
+ Container youtubetask-redis-1 Healthy 
+ Container youtubetask-minio-init-1 Exited 
+ Container youtubetask-backend-1 Starting 
+ Container youtubetask-minio-init-1 Exited 
+ Container youtubetask-worker-1 Starting 
+ Container youtubetask-backend-1 Started 
+ Container youtubetask-worker-1 Started 

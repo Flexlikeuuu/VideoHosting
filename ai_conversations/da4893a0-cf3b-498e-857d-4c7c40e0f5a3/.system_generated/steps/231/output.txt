@@ -1,0 +1,93 @@
+Created At: 2026-11-15T20:25:46+03:00
+Completed At: 2026-11-15T20:25:48+03:00
+Command exited with code 0.
+
+Command output:
+warning: in the working copy of 'backend/alembic/env.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/database.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/redis.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/main.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/alembic/versions/b0365297d107_initial_schema.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/dependencies.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/auth.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/routers/videos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/exceptions.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/rate_limit.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/core/security.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/community.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/enums.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/playlist.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/token.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/user.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/video.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/token.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/user.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/repositories/video.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/schemas/auth.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/schemas/video.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/access.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/auth.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/pytest.ini', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_auth_and_access.py', LF will be replaced by CRLF the next time Git touches it
+[master 41cf727] feat: implement database models, auth, rbac, and video access control
+ 28 files changed, 2024 insertions(+), 13 deletions(-)
+ create mode 100644 backend/alembic/versions/b0365297d107_initial_schema.py
+ create mode 100644 backend/app/api/v1/dependencies.py
+ create mode 100644 backend/app/api/v1/routers/auth.py
+ create mode 100644 backend/app/api/v1/routers/videos.py
+ create mode 100644 backend/app/core/exceptions.py
+ create mode 100644 backend/app/core/rate_limit.py
+ create mode 100644 backend/app/core/security.py
+ create mode 100644 backend/app/models/__init__.py
+ create mode 100644 backend/app/models/community.py
+ create mode 100644 backend/app/models/enums.py
+ create mode 100644 backend/app/models/playlist.py
+ create mode 100644 backend/app/models/token.py
+ create mode 100644 backend/app/models/user.py
+ create mode 100644 backend/app/models/video.py
+ create mode 100644 backend/app/repositories/token.py
+ create mode 100644 backend/app/repositories/user.py
+ create mode 100644 backend/app/repositories/video.py
+ create mode 100644 backend/app/schemas/auth.py
+ create mode 100644 backend/app/schemas/video.py
+ create mode 100644 backend/app/services/access.py
+ create mode 100644 backend/app/services/auth.py
+ create mode 100644 backend/pytest.ini
+ create mode 100644 backend/tests/test_auth_and_access.py
+commit 41cf7278fce2f593916b4b0061d6d7dddd33e433
+Author: Flexlikeuuu <kirillstepanenko2017@mail.ru>
+Date:   Sun Nov 15 20:25:48 2026 +0300
+
+    feat: implement database models, auth, rbac, and video access control
+
+ backend/alembic/env.py                             |   1 +
+ .../versions/b0365297d107_initial_schema.py        | 215 ++++++++++++++++++
+ backend/app/api/v1/dependencies.py                 |  66 ++++++
+ backend/app/api/v1/routers/auth.py                 | 144 +++++++++++++
+ backend/app/api/v1/routers/videos.py               | 117 ++++++++++
+ backend/app/core/database.py                       |   3 +-
+ backend/app/core/exceptions.py                     |  36 ++++
+ backend/app/core/rate_limit.py                     |  30 +++
+ backend/app/core/redis.py                          |  19 +-
+ backend/app/core/security.py                       |  59 +++++
+ backend/app/main.py                                |   4 +
+ backend/app/models/__init__.py                     |  23 ++
+ backend/app/models/community.py                    | 181 ++++++++++++++++
+ backend/app/models/enums.py                        |  25 +++
+ backend/app/models/playlist.py                     |  86 ++++++++
+ backend/app/models/token.py                        |  47 ++++
+ backend/app/models/user.py                         |  52 +++++
+ backend/app/models/video.py                        | 144 +++++++++++++
+ backend/app/repositories/token.py                  |  54 +++++
+ backend/app/repositories/user.py                   |  41 ++++
+ backend/app/repositories/video.py                  |  79 +++++++
+ backend/app/schemas/auth.py                        |  50 +++++
+ backend/app/schemas/video.py                       |  50 +++++
+ backend/app/services/access.py                     | 153 +++++++++++++
+ backend/app/services/auth.py                       | 114 ++++++++++
+ backend/pytest.ini                                 |   3 +
+ backend/requirements.txt                           |   2 +
+ backend/tests/test_auth_and_access.py              | 239 +++++++++++++++++++++
+ 28 files changed, 2024 insertions(+), 13 deletions(-)

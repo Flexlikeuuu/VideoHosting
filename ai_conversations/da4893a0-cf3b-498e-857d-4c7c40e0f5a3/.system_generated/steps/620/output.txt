@@ -1,0 +1,6 @@
+Created At: 2026-11-16T10:38:41+03:00
+Completed At: 2026-11-16T10:38:42+03:00
+Command exited with code 1.
+
+Command output:
+service "backend" is not running

@@ -1,0 +1,90 @@
+Created At: 2026-11-15T20:28:37+03:00
+Completed At: 2026-11-15T20:28:39+03:00
+Command exited with code 0.
+
+Command output:
+[
+    {
+        "Name": "youtubetask_youtube_net",
+        "Id": "911798512bdb4e2c78b2b757a9efc1fb0f83b3b601f85610d722058e84149a96",
+        "Created": "2026-11-12T15:22:10.440923536Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "c8eb7d64c7e1322706a19c854bc4f43d0c87c599a8fefb3f2bab3ec6fc0a2db6",
+            "com.docker.compose.network": "youtube_net",
+            "com.docker.compose.project": "youtubetask",
+            "com.docker.compose.version": "5.5.1"
+        },
+        "Containers": {
+            "017b2e57e0c09b564099c4efd747bd5e51df745b698b0a0dcbfe691cdc2a3735": {
+                "Name": "youtubetask-worker-1",
+                "EndpointID": "b9111669fc43e19ea13e921dd6e2de6f418fa5bdb35611cda6cad749a79cfc6a",
+                "MacAddress": "62:28:4c:21:d4:db",
+                "IPv4Address": "172.20.0.5/16",
+                "IPv6Address": ""
+            },
+            "0eeaa5557d70fa32a167425bf4482bf80c76ee2db01894e2b7e006039034ef47": {
+                "Name": "youtubetask-redis-1",
+                "EndpointID": "b89efcaa41cd27e50a4b52e8998ddfde42cb112e79fb01284db8f143ef633d69",
+                "MacAddress": "62:48:d3:a5:7e:1a",
+                "IPv4Address": "172.20.0.4/16",
+                "IPv6Address": ""
+            },
+            "6ec34cee072374a3e8a3edc262a8d2d30eea2c5db2df1501a0f08b7d24b793c9": {
+                "Name": "youtubetask-postgres-1",
+                "EndpointID": "171e7666c6e85e188b97686973b32c04a277b0d21ef0c1a456e68e03d8b354a0",
+                "MacAddress": "42:7a:00:c0:6e:bd",
+                "IPv4Address": "172.20.0.6/16",
+                "IPv6Address": ""
+            },
+            "c0befaf2d4697b66dcb97daf9e3cfd6dfd6e96dd4ec13e8f8d23432f415fdb12": {
+                "Name": "youtubetask-backend-1",
+                "EndpointID": "4f774cd364344f87333232e21020ed7ef43460c6094dac31edadd53305cf7497",
+                "MacAddress": "4e:6e:c0:2e:c4:d9",
+                "IPv4Address": "172.20.0.3/16",
+                "IPv6Address": ""
+            },
+            "fa9c10ba331366b7c6ae50e6b2a6bdbd9a8967abcd36e2936af01e23f2ba05bc": {
+                "Name": "youtubetask-minio-1",
+                "EndpointID": "2c4de16b8558105f3696c0c5a32f0f36e465c0f363137498812765bbff0becfa",
+                "MacAddress": "9a:69:5b:f5:e5:8a",
+                "IPv4Address": "172.20.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.20.0.0/16": {
+                        "IPsInUse": 8,
+                        "DynamicIPsAvailable": 65528
+                    }
+                }
+            }
+        }
+    }
+]

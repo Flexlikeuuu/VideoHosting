@@ -1,0 +1,32 @@
+Created At: 2026-11-16T10:49:09+03:00
+Completed At: 2026-11-16T10:49:19+03:00
+Command exited with code 0.
+
+Command output:
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/local/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /app
+configfile: pytest.ini
+plugins: asyncio-0.26.0, anyio-4.16.0
+asyncio: mode=Mode.AUTO, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 4 items
+
+tests/test_e2e_and_security.py::test_security_upload_validation_magic_bytes PASSED [ 25%]
+tests/test_e2e_and_security.py::test_security_moderation_rbac_forbidden_for_regular_user PASSED [ 50%]
+tests/test_e2e_and_security.py::test_security_private_video_access_control_and_revocation PASSED [ 75%]
+tests/test_e2e_and_security.py::test_e2e_primary_journey PASSED          [100%]
+
+=============================== warnings summary ===============================
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+tests/test_e2e_and_security.py::test_e2e_primary_journey
+  /usr/local/lib/python3.12/site-packages/botocore/auth.py:425: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    datetime_now = datetime.datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 4 passed, 7 warnings in 6.56s =========================

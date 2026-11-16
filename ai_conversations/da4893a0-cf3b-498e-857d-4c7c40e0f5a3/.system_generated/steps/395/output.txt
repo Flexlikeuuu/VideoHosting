@@ -1,0 +1,17 @@
+Created At: 2026-11-15T20:44:24+03:00
+Completed At: 2026-11-15T20:44:28+03:00
+Command exited with code 0.
+
+Command output:
+v24.14.0
+11.9.0
+
+
+    Каталог: C:\Users\kiril\OneDrive\Рабочий стол\Лабы\AQA\YoutubeTask\frontend
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+d-----        11/12/2026   6:13 PM                dist                                                                 
+
+
